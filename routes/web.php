@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MunicipioController;
 use App\Http\Controllers\StateController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,3 +23,4 @@ route::resource('/estados',StateController::class)->parameters([
         'estados' => 'state',
     ]);
 
+route::resource('/municipios', MunicipioController::class);

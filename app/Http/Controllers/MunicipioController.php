@@ -1,0 +1,89 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Municipio;
+use App\Http\Requests\StoreMunicipioRequest;
+use App\Http\Requests\UpdateMunicipioRequest;
+use App\Models\State;
+use Inertia\Inertia;
+
+class MunicipioController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $municipios = Municipio::with('state')->get();
+
+        return Inertia::render('Municipios/Index', ['municipios' => $municipios]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $states = State::orderBy('name')->get();
+
+        return Inertia::render('Municipios/Create',[
+            'states' => $states
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreMunicipioRequest $request)
+    {
+        $municipio = $request->validated();
+
+        Municipio::create($municipio);
+
+        return redirect()->route('municipios.index');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Municipio $municipio)
+    {
+        $municipio->load('state');
+
+        return Inertia::render('Municipios/Show',[
+            'municipio' => $municipio
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Municipio $municipio)
+    {
+        $states = State::orderBy('name')->get();
+
+        return Inertia::render('Municipios/Edit',[
+            'states' => $states,
+            'municipio' => $municipio,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateMunicipioRequest $request, Municipio $municipio)
+    {
+        $municipio->update($request->validated());
+
+        return redirect()->route('municipios.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Municipio $municipio)
+    {
+        
+    }
+}

@@ -23,5 +23,15 @@ export default defineConfig({
                 },
             },
         }),
+
     ],
+
+      server: {
+    host: 'localhost',   // 👈 Fuerza IPv4
+    port: 5173,
+    strictPort: true,
+    hmr: {
+      host: 'localhost', // 👈 Corrige las rutas del archivo HOT
+    }},
+
 });

@@ -73,6 +73,12 @@ const mainNavItems: NavItem[] = [
         href: '/estados',
         icon: Building,
     },
+
+    {
+        title: 'Municipios',
+        href: '/municipios',
+        icon: Building,
+    },
 ];
 
 const rightNavItems: NavItem[] = [
