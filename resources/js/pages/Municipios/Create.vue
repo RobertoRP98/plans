@@ -60,12 +60,12 @@ const breadcrumbs = [
             <div class="flex w-full max-w-2xl flex-col">
                 <Card class="mt-3">
                     <CardHeader>
-                        <CardTitle> Editar Municipio </CardTitle>
+                        <CardTitle> Crear Municipio </CardTitle>
                     </CardHeader>
                     <CardContent class="space-y-3">
                         <form class="space-y-6" @submit.prevent="handleSubmit">
                             <div class="grid w-full gap-2">
-                                <Label form="name">Nombre</Label>
+                                <Label for="name">Nombre</Label>
                                 <Input id="name" v-model="form.name"></Input>
                                 <InputError
                                     :message="form.errors.name"
@@ -100,7 +100,7 @@ const breadcrumbs = [
                             </div>
 
                             <div class="grid w-full gap-2">
-                                <Label form="active">Activo</Label>
+                                <Label for="active">Activo</Label>
                                 <Switch id="active" v-model="form.active" />
                                 <InputError
                                     :message="form.errors.active"

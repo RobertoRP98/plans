@@ -6,7 +6,6 @@ use App\Models\State;
 use App\Http\Requests\StoreStateRequest;
 use App\Http\Requests\UpdateStateRequest;
 use GuzzleHttp\Promise\Create;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class StateController extends Controller
@@ -50,11 +49,12 @@ class StateController extends Controller
     public function show(State $state)
     {
 
-        return Inertia::render('States/Show',
-            ['state' => $state
-            
-        ]);
-
+        return Inertia::render(
+            'States/Show',
+            [
+                'state' => $state
+            ]
+        );
     }
 
     /**
@@ -62,11 +62,13 @@ class StateController extends Controller
      */
     public function edit(State $state)
     {
-        
-        return Inertia::render('States/Edit', 
-        [
-            'state' => $state
-        ]);
+
+        return Inertia::render(
+            'States/Edit',
+            [
+                'state' => $state
+            ]
+        );
     }
 
     /**
@@ -86,6 +88,6 @@ class StateController extends Controller
     {
         $state->delete();
 
-        return redirect()->route('estados.index'); 
+        return redirect()->route('estados.index');
     }
 }

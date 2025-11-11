@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppLogo from '@/components/AppLogo.vue';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
-import { Building } from 'lucide-vue-next';
+import { Building,ListCheck,House } from 'lucide-vue-next';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -77,7 +77,13 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Municipios',
         href: '/municipios',
-        icon: Building,
+        icon: House,
+    },
+
+     {
+        title: 'Categorias',
+        href: '/categorias',
+        icon: ListCheck,
     },
 ];
 

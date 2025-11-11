@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MunicipioController;
 use App\Http\Controllers\StateController;
 use Illuminate\Support\Facades\Route;
@@ -16,11 +17,13 @@ Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';
 
 
-route::resource('/estados',StateController::class)->parameters([
-        'estados' => 'state',
-    ]);
+route::resource('/estados', StateController::class)->parameters([
+    'estados' => 'state',
+]);
 
 route::resource('/municipios', MunicipioController::class);
+
+route::resource('/categorias', CategoryController::class)->parameters(['categorias' => 'category']);

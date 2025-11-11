@@ -68,7 +68,7 @@ const breadcrumbs = [
             <div class="flex w-full max-w-2xl flex-col">
                 <Card class="mt-3">
                     <CardHeader>
-                        <CardTitle> Agregar Municipio </CardTitle>
+                        <CardTitle> Editar Municipio </CardTitle>
                     </CardHeader>
                     <CardContent class="space-y-3">
                         <form class="space-y-6" @submit.prevent="handleSubmit">
