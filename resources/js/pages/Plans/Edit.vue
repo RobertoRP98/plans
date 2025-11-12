@@ -27,6 +27,7 @@ const form = useForm({
     description: plan.description,
     duration: plan.duration,
     price: plan.price,
+    priority:plan.priority,
     active:plan.active,
 })
 
@@ -92,6 +93,14 @@ const breadcrumbs = [
                                 <Input id="price" v-model="form.price"></Input>
                                 <InputError
                                     :message="form.errors.price"
+                                ></InputError>
+                            </div>
+
+                               <div class="grid w-full gap-2">
+                                <Label for="priority">Prioridad</Label>
+                                <Input id="priority" v-model="form.priority"></Input>
+                                <InputError
+                                    :message="form.errors.priority"
                                 ></InputError>
                             </div>
 

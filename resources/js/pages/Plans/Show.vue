@@ -54,8 +54,13 @@ const breadcrumbs = [
                         </div>
 
                           <div class="flex items-center space-x-4">
-                            <div class="w-32 font-semibold">Descripción</div>
+                            <div class="w-32 font-semibold">Precio</div>
                             <div>{{ plan.price }}</div>
+                        </div>
+
+                          <div class="flex items-center space-x-4">
+                            <div class="w-32 font-semibold">Prioridad</div>
+                            <div>{{ plan.priority }}</div>
                         </div>
 
                           <div class="flex items-center space-x-4">

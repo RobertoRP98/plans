@@ -26,6 +26,7 @@ class StorePlanRequest extends FormRequest
             'description' => 'required',
             'duration' => 'required|numeric',
             'price' => 'required|decimal:2,10',
+            'priority' => 'required',
             'active' => 'required'
         ];
     }

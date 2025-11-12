@@ -15,7 +15,8 @@ const form = useForm({
     description: '',
     duration:'',
     price:'',
-    active: '',
+    priority:'',
+    active: true,
 });
 
 const handleSubmit = () => {
@@ -76,9 +77,17 @@ const breadcrumbs = [
                             </div>
                               <div class="grid w-full gap-2">
                                 <Label for="price">Precio</Label>
-                                <Input id="price" v-model="form.price"></Input>
+                                <Input type="number" step="0.01" id="price" v-model="form.price"></Input>
                                 <InputError
                                     :message="form.errors.price"
+                                ></InputError>
+                            </div>
+
+                              <div class="grid w-full gap-2">
+                                <Label for="priority">Prioridad</Label>
+                                <Input type="number" id="priority" v-model="form.priority"></Input>
+                                <InputError
+                                    :message="form.errors.priority"
                                 ></InputError>
                             </div>
 

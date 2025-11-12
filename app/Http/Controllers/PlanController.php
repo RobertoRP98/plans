@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Plan;
 use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\UpdatePlanRequest;
+use Illuminate\Container\Attributes\Log;
 use Inertia\Inertia;
 
 class PlanController extends Controller
@@ -32,9 +33,10 @@ class PlanController extends Controller
      */
     public function store(StorePlanRequest $request)
     {
-        $plan = $request->validated();
-        
-        Plan::created($plan);
+
+        $plan = $request->validated();        
+
+        Plan::create($plan);
 
         return redirect()->route('planes.index');
      }

@@ -11,7 +11,7 @@ class Category extends Model
 
     protected $casts = ['active' => 'boolean'];
 
-    public function plan():BelongsTo{
-        return $this->belongsTo(Plan::class);
+    public function post():BelongsTo{
+        return $this->belongsTo(Post::class);
     }
 }

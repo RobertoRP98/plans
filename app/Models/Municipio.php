@@ -17,4 +17,8 @@ class Municipio extends Model
     {
         return $this->belongsTo(State::class);
     }
+
+    public function post():BelongsTo{
+        return $this->belongsTo(Post::class);
+    }
 }

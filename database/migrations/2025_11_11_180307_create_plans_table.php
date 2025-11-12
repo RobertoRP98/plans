@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('duration');
             $table->decimal('price');
             $table->boolean('active');
+            $table->unsignedTinyInteger('priority')->default(0); 
             $table->timestamps();
         });
     }
