@@ -5,6 +5,16 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import { initializeTheme } from './composables/useAppearance';
+import DataTablesLib from 'datatables.net'; 
+import DataTable from 'datatables.net-vue3';
+import DataTablesCore from 'datatables.net-dt';
+import DataTableResponsive from 'datatables.net-responsive-dt'
+// Importa los estilos de DataTables y del módulo responsive
+import 'datatables.net-dt/css/dataTables.dataTables.css'
+import 'datatables.net-responsive-dt/css/responsive.dataTables.css'
+ 
+DataTable.use(DataTablesLib);
+DataTable.use(DataTableResponsive);
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -18,6 +28,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
+            .component('DataTable', DataTable) 
             .mount(el);
     },
     progress: {

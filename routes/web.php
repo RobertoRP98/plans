@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MunicipioController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\StateController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,3 +28,5 @@ route::resource('/estados', StateController::class)->parameters([
 route::resource('/municipios', MunicipioController::class);
 
 route::resource('/categorias', CategoryController::class)->parameters(['categorias' => 'category']);
+
+route::resource('/planes',PlanController::class)->parameters(['planes' => 'plan']);
