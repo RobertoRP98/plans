@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Plan;
 use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\UpdatePlanRequest;
-use Illuminate\Container\Attributes\Log;
 use Inertia\Inertia;
 
 class PlanController extends Controller
@@ -15,9 +14,14 @@ class PlanController extends Controller
      */
     public function index()
     {
-        $plans = Plan::all();
+        return Inertia::render('Plans/Index');
+    }
 
-        return Inertia::render('Plans/Index', ['plans' => $plans]);
+    public function dataIndex(){
+        return datatables()
+        ->eloquent(Plan::query())
+        ->addColumn('active_text',fn($plan)=>$plan->active ? 'Si':'No')
+        ->toJson();
     }
 
     /**
