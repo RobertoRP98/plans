@@ -27,7 +27,10 @@ const props = defineProps({
     categories: Array,
     states: Array,
     plans: Array,
+    phone:String,
 });
+
+const phone = props.phone;
 
 const municipiosList = ref([]); // lista dinámica
 
@@ -59,6 +62,7 @@ const form = useForm({
     state_id: '',
     municipio_id: '',
     plan_id: '',
+    phone:phone.phone,
 });
 
 const submitForm = () => {
@@ -74,7 +78,7 @@ const submitForm = () => {
 
 <template>
     <Dialog :open="open" @update:open="(val) => val || emit('close')">
-        <DialogContent>
+        <DialogContent class="max-h-[80vh] overflow-y-auto">
             <DialogHeader>
                 <DialogTitle>Crear Anuncio</DialogTitle>
                 <DialogDescription>
@@ -84,48 +88,8 @@ const submitForm = () => {
 
             <!-- campos del formulario -->
             <div class="grid gap-4">
-                <div class="grid w-full gap-2">
-                    <Label for="title">Titulo</Label>
-                    <Input
-                        v-model="form.title"
-                        class="input"
-                        placeholder="Solicito donador para el Hospital General"
-                    />
-                    <InputError :message="form.errors.title"></InputError>
-                </div>
 
-                <div class="grid w-full gap-2">
-                    <Label for="description">Descripción</Label>
-                    <Textarea
-                        v-model="form.description"
-                        placeholder="Solicitamos 10 donadores de sangre O+ positivo favor de comunicarse al Whatsapp"
-                    ></Textarea>
-                    <InputError :message="form.errors.description"></InputError>
-                </div>
-
-                <div class="grid w-full gap-2">
-                    <Label for="category_id">Selecciona una Categoria</Label>
-                    <Select v-model="form.category_id">
-                        <SelectTrigger>
-                            <SelectValue
-                                placeholder="Presiona para ver las categorias"
-                            >
-                            </SelectValue>
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem
-                                v-for="category in categories"
-                                :key="category.id"
-                                :value="category.id"
-                            >
-                                {{ category.name }}
-                            </SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <InputError :message="form.errors.category_id" />
-                </div>
-
-                <div class="grid w-full gap-2">
+                  <div class="grid w-full gap-2">
                     <Label for="state_id">Selecciona un Estado</Label>
                     <Select
                         v-model="form.state_id"
@@ -148,8 +112,8 @@ const submitForm = () => {
                     <InputError :message="form.errors.state_id"></InputError>
                 </div>
 
-                <div class="grid w-full gap-2">
-                    <Label for="municipio_id">Municipio</Label>
+                 <div class="grid w-full gap-2">
+                    <Label for="municipio_id">Ciudad</Label>
 
                     <Select
                         v-model="form.municipio_id"
@@ -173,6 +137,53 @@ const submitForm = () => {
                     </Select>
                     <InputError :message="form.errors.municipio_id" />
                 </div>
+
+                 <div class="grid w-full gap-2">
+                    <Label for="category_id">Selecciona una Categoria</Label>
+                    <Select v-model="form.category_id">
+                        <SelectTrigger>
+                            <SelectValue
+                                placeholder="Presiona para ver las categorias"
+                            >
+                            </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem
+                                v-for="category in categories"
+                                :key="category.id"
+                                :value="category.id"
+                            >
+                                {{ category.name }}
+                            </SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <InputError :message="form.errors.category_id" />
+                </div>
+
+                 <div class="grid w-full gap-2">
+                    <Label for="title">Titulo</Label>
+                    <Input
+                        v-model="form.title"
+                        class="input"
+                        placeholder="Solicito donador para el Hospital General"
+                    />
+                    <InputError :message="form.errors.title"></InputError>
+                </div>
+
+                  <div class="grid w-full gap-2">
+                    <Label for="description">Descripción</Label>
+                    <Textarea
+                        v-model="form.description"
+                        placeholder="Informacion de lo que necesitas y en donde, ejemplo: Solicito 10 donadores O+ para el Hospital General, Contactar al numero por llamada o whatsapp"
+                    ></Textarea>
+                    <InputError :message="form.errors.description"></InputError>
+                </div>
+
+                <div class="grid w-full gap-2">
+
+                            <div class="w-64 font-semibold">Numero de contacto</div>
+                            <div>{{ phone }}</div>
+                        </div>
 
                    <div class="grid w-full gap-2">
                     <Label for="plan_id">Selecciona un plan</Label>

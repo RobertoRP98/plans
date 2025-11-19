@@ -29,7 +29,7 @@ return new class extends Migration
             $table->boolean('is_premium')->default(false);
             $table->enum('status', ['pending', 'active', 'expired'])->default('pending');
 
-            
+            $table->string('phone');
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(Category::class)->constrained();
             $table->foreignIdFor(State::class)->constrained();

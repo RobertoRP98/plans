@@ -34,6 +34,10 @@ defineProps({
     plans:{
         type:Array,
         required:true
+    },
+    phone:{
+        type:String,
+        required:true
     }
 });
 
@@ -71,6 +75,7 @@ const breadcrumbs = [
                 :states="states"
                 :plans="plans"
                 :municipios="municipios"
+                :phone="phone"
                 ></Create>
             </div>
 

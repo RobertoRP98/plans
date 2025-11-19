@@ -27,13 +27,15 @@ class PostController extends Controller
         $municipios = Municipio::all();
         $plans = Plan::all();
         $posts = Post::with(['user', 'category', 'state', 'municipio', 'plan'])->get();
+        $phone = Auth::user()->phone;
 
         return Inertia::render('Posts/Index', [
             'posts' => $posts,
             'categories' => $categories,
             'states' => $states,
             'municipios' => $municipios,
-            'plans' => $plans
+            'plans' => $plans,
+            'phone' => $phone
         ]);
     }
 
@@ -69,6 +71,7 @@ class PostController extends Controller
             'is_premium' => $plan->price > 0,
             'status' => 'active',
             'user_id' => Auth::id(),
+            'phone' => Auth::user()?->phone,
             'category_id' => $data['category_id'],
             'state_id' => $data['state_id'],
             'municipio_id' => $data['municipio_id'],
