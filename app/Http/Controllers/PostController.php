@@ -42,10 +42,7 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -86,7 +83,12 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        // Incrementa el contador de vistas
+        $post->increment('views');
+
+        $post->load('user');
+
+        return Inertia::render('Posts/Show', ['post' => $post]);
     }
 
     /**
@@ -94,7 +96,15 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+
+        $post->load('user', 'category', 'state', 'municipio', 'plan');
+
+        return Inertia::render('Posts/Edit', [
+            'post' => $post,
+            'states' => State::all(['id', 'name']),
+            'categories' => Category::all(['id', 'name']),
+            'phone' => $post->user->phone, // si quieres mostrarlo
+        ]);
     }
 
     /**
@@ -102,7 +112,16 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $post->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+            'state_id' => $request->state_id,
+            'municipio_id' => $request->municipio_id,
+            'slug' => Str::slug($request->title) . '-' . uniqid(),
+        ]);
+
+        return redirect()->route('anuncios.index');
     }
 
     /**

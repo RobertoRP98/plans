@@ -41,7 +41,7 @@ const form = useForm({
 const handleSubmit = () => {
     form.patch(`/municipios/${municipio.id}`, {
         preserveScroll: true,
-        onSuccess: () => toast.success('Municipio agregado correctamente'),
+        onSuccess: () => toast.success('Municipio actualizado correctamente'),
     });
 };
 
@@ -59,7 +59,7 @@ const breadcrumbs = [
 </script>
 
 <template>
-    <Head title="Crear Estado" />
+    <Head title="Actualizar Municipio" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div

@@ -5,7 +5,7 @@ import AppLayout from '@/layouts/app/AppHeaderLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 
 defineProps({
-    municipio: {
+    post: {
         type: Object,
         required: true,
     },
@@ -13,19 +13,19 @@ defineProps({
 
 const breadcrumbs = [
     {
-        title: 'Municipios',
-        href: '/municipios',
+        title: 'Anuncios',
+        href: '/anuncios',
     },
 
     {
-        title: 'Detalle del Municipio',
+        title: 'Detalle del Anuncio',
         href: '/#',
     },
 ];
 </script>
 
 <template>
-    <Head title="Detalle Estado" />
+    <Head title="Detalle Anuncio" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div
@@ -34,27 +34,50 @@ const breadcrumbs = [
             <div class="flex w-full max-w-2xl flex-col">
                 <Card class="mt-3">
                     <CardHeader>
-                        <CardTitle> Detalle del Municipio </CardTitle>
+                        <CardTitle> Detalle del Anuncio </CardTitle>
                     </CardHeader>
                     <CardContent class="space-y-3">
-                        <p><strong>Nombre:</strong> {{ municipio.name }}</p>
+                        <p><strong>Titulo:</strong> {{ post.title }}</p>
                         <p>
-                            <strong>Estado:</strong> {{ municipio.state.name }}
+                            <strong>Descripción:</strong> {{ post.description }}
                         </p>
+
+                         <p>
+                            <strong>Fecha de inicio:</strong> {{ post.start }}
+                        </p>
+
+                         <p>
+                            <strong>Fecha final:</strong> {{ post.end }}
+                        </p>
+
+                         <p>
+                            <strong>Premium:</strong> {{ post.is_premium ? 'Si':'No' }}
+                        </p>
+
+
                         <p>
                             <strong>Activo:</strong>
-                            {{ municipio.active ? 'Sí' : 'No' }}
+                            {{ post.active ? 'Sí' : 'No' }}
                         </p>
+
+                               <p>
+                            <strong>Telefono:</strong> {{ post.user.phone }}
+                        </p>
+
+                          <p>
+                            <strong>Vistas:</strong> {{ post.views }}
+                        </p>
+
 
                          <div
                             class="flex items-center justify-between space-x-4"
                         >
-                            <Link href="/municipios" :class="buttonVariants({variant: 'ghost'})">
-                                Ver Municipios
+                            <Link href="/anuncios" :class="buttonVariants({variant: 'ghost'})">
+                                Ver Anuncios
                             </Link>
 
                             <div>
-                            <Link :href="`/municipios/${municipio.id}/edit`" :class="buttonVariants({variant:'default'})">Editar</Link> 
+                            <Link :href="`/anuncios/${post.id}/edit`" :class="buttonVariants({variant:'default'})">Editar</Link> 
                             <!-- <Button @click="deleteState(state.id)" class="ml-2" variant="destructive">Delete</Button> -->
                             </div>
                         </div>

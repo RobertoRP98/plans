@@ -24,24 +24,33 @@ class Post extends Model
         'plan_id',
     ];
 
-    public function user():BelongsTo{
-      return  $this->belongsTo(User::class);
+    public function user(): BelongsTo
+    {
+        return  $this->belongsTo(User::class);
     }
 
-    public function category():BelongsTo{
+    public function category(): BelongsTo
+    {
         return $this->BelongsTo(Category::class);
     }
 
-    public function state():BelongsTo{
+    public function state(): BelongsTo
+    {
         return $this->BelongsTo(State::class);
     }
 
-    public function municipio():BelongsTo{
+    public function municipio(): BelongsTo
+    {
         return $this->BelongsTo(Municipio::class);
     }
 
-    public function plan():BelongsTo{
+    public function plan(): BelongsTo
+    {
         return $this->BelongsTo(Plan::class);
     }
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

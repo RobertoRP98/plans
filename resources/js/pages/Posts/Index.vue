@@ -108,7 +108,7 @@ const breadcrumbs = [
                         <TableCell>{{ post.status }}</TableCell>
                         <TableCell class="space-x-2">
                             <Link
-                                :href="`/anuncios/${post.id}`"
+                                :href="`/anuncios/${post.slug}`"
                                 :class="
                                     buttonVariants({ variant: 'secondary' })
                                 "
@@ -116,7 +116,7 @@ const breadcrumbs = [
                             >
 
                             <Link
-                                :href="`/anuncios/${post.id}/edit`"
+                                :href="`/anuncios/${post.slug}/edit`"
                                 :class="buttonVariants({ variant: 'default' })"
                                 >Edit</Link
                             >
