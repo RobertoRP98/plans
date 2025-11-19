@@ -21,10 +21,19 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['user','category','state','municipio','plan']);
 
-        return Inertia::render('Posts/Index',[
-            'posts' => $posts
+        $categories = Category::all();
+        $states = State::all();
+        $municipios = Municipio::all();
+        $plans = Plan::all();
+        $posts = Post::with(['user', 'category', 'state', 'municipio', 'plan'])->get();
+
+        return Inertia::render('Posts/Index', [
+            'posts' => $posts,
+            'categories' => $categories,
+            'states' => $states,
+            'municipios' => $municipios,
+            'plans' => $plans
         ]);
     }
 
@@ -33,17 +42,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $states = State::all();
-        $municipios = Municipio::all();
-        $plans = Plan::all();
-        
-        return Inertia::render('Posts/Create',[
-            'categories' => $categories,
-            'states' => $states,
-            'municipios' => $municipios,
-            'plans' => $plans
-        ]);
+
     }
 
     /**
@@ -62,22 +61,21 @@ class PostController extends Controller
         $post = Post::create([
             'title' => $data['title'],
             'description' => $data['description'],
-            'slug' => Str::slug($data['title']).'-'.uniqid(),
+            'slug' => Str::slug($data['title']) . '-' . uniqid(),
             'start' => $start,
             'end' => $end,
             'views' => 0,
             'active' => true,
-            'is_premium'=>$plan->price > 0,
+            'is_premium' => $plan->price > 0,
             'status' => 'active',
             'user_id' => Auth::id(),
             'category_id' => $data['category_id'],
             'state_id' => $data['state_id'],
             'municipio_id' => $data['municipio_id'],
             'plan_id' => $plan->id,
-         ]);
+        ]);
 
-         return redirect()->route('anuncios.index')->with('success','Anuncio creado correctamente');
-        
+        return redirect()->route('anuncios.index')->with('success', 'Anuncio creado correctamente');
     }
 
     /**

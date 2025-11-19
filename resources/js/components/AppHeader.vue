@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppLogo from '@/components/AppLogo.vue';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
-import { Building,ListCheck,House,NotebookPen } from 'lucide-vue-next';
+import { Building,ListCheck,House,NotebookPen,Eye } from 'lucide-vue-next';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -84,6 +84,12 @@ const mainNavItems: NavItem[] = [
         title: 'Planes',
         href: '/planes',
         icon: NotebookPen,
+    },
+
+     {
+        title: 'Anuncios',
+        href: '/anuncios',
+        icon: Eye,
     },
 ];
 
