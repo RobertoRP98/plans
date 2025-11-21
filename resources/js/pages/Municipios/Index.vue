@@ -10,7 +10,17 @@ import {
 } from '@/components/ui/table';
 import AppLayout from '@/layouts/app/AppHeaderLayout.vue';
 import { Head, Link} from '@inertiajs/vue3';
+import {usePage} from '@inertiajs/vue3'
+import { onMounted } from 'vue';
+import { toast } from 'vue-sonner';
 
+const page = usePage()
+
+onMounted(() => {
+     if (page.props.flash?.success) {
+        toast.success(page.props.flash.success)
+    }
+})
 
 defineProps({
     municipios: {

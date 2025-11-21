@@ -32,7 +32,7 @@ defineProps({
 const handleSubmit = () => {
     form.post('/municipios', {
         preserveScroll: true,
-        onSuccess: () => toast.success('Municipio agregado correctamente'),
+        onSuccess: () => toast.success('Municipio agregado desde front correctamente'),
     });
 };
 

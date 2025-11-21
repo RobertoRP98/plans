@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\MunicipioController;
+use Inertia\Inertia;
+use Laravel\Fortify\Features;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\StateController;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use Laravel\Fortify\Features;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MunicipioController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -33,3 +34,8 @@ route::resource('/categorias', CategoryController::class)->parameters(['categori
 route::resource('/planes',PlanController::class)->parameters(['planes' => 'plan']);
 
 route::resource('/anuncios',PostController::class)->parameters(['anuncios' => 'post']);
+
+Route::get('/anuncios/{post}/pagar', [PaymentController::class, 'pagar'])
+    ->name('anuncios.pagar');
+
+route::post('process-payment',[PaymentController::class,'processPayment'])->name('process.payment');

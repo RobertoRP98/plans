@@ -57,25 +57,49 @@ class PostController extends Controller
 
         $end = $start->copy()->addDays($plan->duration);
 
+        if (!$plan || $plan->price == 0) {
+            $post = Post::create([
+                'title' => $data['title'],
+                'description' => $data['description'],
+                'slug' => Str::slug($data['title']) . '-' . uniqid(),
+                'start' => $start,
+                'end' => $end,
+                'views' => 0,
+                'active' => true,
+                'is_premium' => $plan->price > 0,
+                'status' => 'active',
+                'user_id' => Auth::id(),
+                'phone' => Auth::user()?->phone,
+                'category_id' => $data['category_id'],
+                'state_id' => $data['state_id'],
+                'municipio_id' => $data['municipio_id'],
+                'plan_id' => $plan->id,
+            ]);
+
+            return redirect()->route('anuncios.index')->with('success', 'Anuncio creado correctamente');
+        }
+
+        // SI ELIJE PLAN → crear anuncio pero SIN ACTIVARLO
         $post = Post::create([
             'title' => $data['title'],
             'description' => $data['description'],
             'slug' => Str::slug($data['title']) . '-' . uniqid(),
-            'start' => $start,
-            'end' => $end,
+            'start' => null,               // aún no empieza
+            'end' => null,                 // se asigna después del pago
             'views' => 0,
-            'active' => true,
-            'is_premium' => $plan->price > 0,
-            'status' => 'active',
+            'active' => false,             // aún no está público
+            'is_premium' => true,
+            'status' => 'pending',         // pendiente de pago
             'user_id' => Auth::id(),
             'phone' => Auth::user()?->phone,
             'category_id' => $data['category_id'],
             'state_id' => $data['state_id'],
             'municipio_id' => $data['municipio_id'],
-            'plan_id' => $plan->id,
+            'plan_id' => $plan->id,        // lo guardamos para calcular luego
         ]);
 
-        return redirect()->route('anuncios.index')->with('success', 'Anuncio creado correctamente');
+        // Redirigir a pagar
+        return redirect()->route('anuncios.pagar', $post);
     }
 
     /**

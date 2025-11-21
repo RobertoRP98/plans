@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/app/AppSidebarLayout.vue';
 import type { BreadcrumbItemType } from '@/types';
-import { Toaster } from '@/components/ui/sonner'
 
 
 interface Props {
@@ -15,9 +14,6 @@ withDefaults(defineProps<Props>(), {
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <slot />
-
-        <Toaster class="pointer-events-auto"/>
-        
+        <slot />        
     </AppLayout>
 </template>

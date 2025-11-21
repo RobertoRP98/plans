@@ -20,8 +20,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
-            $table->date('start');
-            $table->date('end');
+            $table->date('start')->nullable();;
+            $table->date('end')->nullable();;
             $table->timestamps();
             $table->string('slug');
             $table->integer('views')->default(0);

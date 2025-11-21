@@ -20,14 +20,14 @@ import {
 import SelectValue from '@/components/ui/select/SelectValue.vue';
 import { Textarea } from '@/components/ui/textarea';
 import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { ref,computed } from 'vue';
 
 const props = defineProps({
     open: Boolean,
     categories: Array,
     states: Array,
     plans: Array,
-    phone:String,
+    phone: String,
 });
 
 const phone = props.phone;
@@ -62,7 +62,7 @@ const form = useForm({
     state_id: '',
     municipio_id: '',
     plan_id: '',
-    phone:phone.phone,
+    phone: phone.phone,
 });
 
 const submitForm = () => {
@@ -74,6 +74,11 @@ const submitForm = () => {
         },
     });
 };
+
+// --- PLAN SELECCIONADO ---
+const selectedPlan = computed(() =>
+    props.plans.find((p) => p.id == form.plan_id),
+);
 </script>
 
 <template>
@@ -88,8 +93,7 @@ const submitForm = () => {
 
             <!-- campos del formulario -->
             <div class="grid gap-4">
-
-                  <div class="grid w-full gap-2">
+                <div class="grid w-full gap-2">
                     <Label for="state_id">Selecciona un Estado</Label>
                     <Select
                         v-model="form.state_id"
@@ -112,7 +116,7 @@ const submitForm = () => {
                     <InputError :message="form.errors.state_id"></InputError>
                 </div>
 
-                 <div class="grid w-full gap-2">
+                <div class="grid w-full gap-2">
                     <Label for="municipio_id">Ciudad</Label>
 
                     <Select
@@ -138,7 +142,7 @@ const submitForm = () => {
                     <InputError :message="form.errors.municipio_id" />
                 </div>
 
-                 <div class="grid w-full gap-2">
+                <div class="grid w-full gap-2">
                     <Label for="category_id">Selecciona una Categoria</Label>
                     <Select v-model="form.category_id">
                         <SelectTrigger>
@@ -160,7 +164,7 @@ const submitForm = () => {
                     <InputError :message="form.errors.category_id" />
                 </div>
 
-                 <div class="grid w-full gap-2">
+                <div class="grid w-full gap-2">
                     <Label for="title">Titulo</Label>
                     <Input
                         v-model="form.title"
@@ -170,7 +174,7 @@ const submitForm = () => {
                     <InputError :message="form.errors.title"></InputError>
                 </div>
 
-                  <div class="grid w-full gap-2">
+                <div class="grid w-full gap-2">
                     <Label for="description">Descripción</Label>
                     <Textarea
                         v-model="form.description"
@@ -180,39 +184,63 @@ const submitForm = () => {
                 </div>
 
                 <div class="grid w-full gap-2">
+                    <div class="w-64 font-semibold">Numero de contacto</div>
+                    <div>{{ phone }}</div>
+                </div>
 
-                            <div class="w-64 font-semibold">Numero de contacto</div>
-                            <div>{{ phone }}</div>
-                        </div>
-
-                   <div class="grid w-full gap-2">
-                    <Label for="plan_id">Selecciona un plan</Label>
+                <!-- PLANES -->
+                <div class="grid w-full gap-2">
+                    <Label for="plan_id">Plan</Label>
                     <Select v-model="form.plan_id">
                         <SelectTrigger>
-                            <SelectValue
-                                placeholder="Presiona para ver los planes"
-                            >
-                            </SelectValue>
+                            <SelectValue placeholder="Selecciona un plan" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem
-                                v-for="plan in plans"
-                                :key="plan.id"
-                                :value="plan.id"
+                                v-for="p in plans"
+                                :key="p.id"
+                                :value="p.id"
                             >
-                                {{ plan.name }} {{ plan.description }}
+                                {{ p.name }} – {{ p.description }}
                             </SelectItem>
                         </SelectContent>
                     </Select>
                     <InputError :message="form.errors.plan_id" />
                 </div>
+
+                <!-- PREVIEW DEL PLAN ELEGIDO -->
+                <div
+                    v-if="selectedPlan"
+                    class="rounded-lg border bg-gray-50 p-4 shadow-sm"
+                >
+                    <h3 class="text-lg font-semibold">
+                        {{ selectedPlan.name }}
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                        {{ selectedPlan.description }}
+                    </p>
+
+                    <div class="mt-2 font-bold text-primary">
+                        Precio:
+                        {{
+                            selectedPlan.price > 0
+                                ? '$' + selectedPlan.price
+                                : 'GRATIS'
+                        }}
+                    </div>
+
+                    <p class="mt-1 text-xs text-gray-500">
+                        Duración: {{ selectedPlan.duration }} días
+                    </p>
+                </div>
             </div>
 
-            <DialogFooter>
-                <Button variant="outline" @click="emit('close')"
-                    >Cancelar</Button
-                >
-                <Button @click="submitForm">Guardar</Button>
+              <DialogFooter>
+                <Button variant="outline" @click="emit('close')">Cancelar</Button>
+                <Button @click="submitForm" :disabled="form.processing">
+                    <span v-if="form.processing">Guardando…</span>
+                    <span v-else>Guardar</span>
+                </Button>
             </DialogFooter>
         </DialogContent>
     </Dialog>

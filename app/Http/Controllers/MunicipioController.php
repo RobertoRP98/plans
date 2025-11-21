@@ -41,7 +41,7 @@ class MunicipioController extends Controller
 
         Municipio::create($municipio);
 
-        return redirect()->route('municipios.index');
+        return redirect()->route('municipios.index')->with('success','Municipio agregado desde back correctamente.');
     }
 
     /**
