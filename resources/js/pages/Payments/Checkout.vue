@@ -1,7 +1,8 @@
 <script setup>
 import AppLayout from '@/layouts/app/AppHeaderLayout.vue';
-import { Head, usePage } from '@inertiajs/vue3';
+import { Head, router, usePage } from '@inertiajs/vue3';
 import { onMounted } from 'vue';
+import { toast } from 'vue-sonner';
 
 const { props } = usePage();
 const plan = props.plan;
@@ -12,8 +13,7 @@ const csrf_token = props.csrf_token;
 
 console.log('PUBLIC KEY:', publicKey, typeof publicKey);
 console.log(props);
-console.log("CSRF:", props.csrf_token)
-
+console.log('CSRF:', props.csrf_token);
 
 function initBrick() {
     const mp = new MercadoPago(publicKey, { locale: 'es-MX' });
@@ -43,9 +43,9 @@ function initBrick() {
             paymentMethods: {
                 creditCard: 'all',
                 debitCard: 'all',
-                onboarding_credits: "all", 
-                wallet_purchase: "all",
-               maxInstallments: 3
+                onboarding_credits: 'all',
+                wallet_purchase: 'all',
+                maxInstallments: 3,
             },
         },
 
@@ -58,7 +58,7 @@ function initBrick() {
                 return new Promise((resolve, reject) => {
                     fetch('/process-payment', {
                         method: 'POST',
-                        credentials: "same-origin",
+                        credentials: 'same-origin',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': props.csrf_token,
@@ -73,8 +73,23 @@ function initBrick() {
                         .then((res) => res.json())
                         .then((res) => {
                             if (res.status === 'success') {
-                                window.location.href = res.redirect;
+                                // 1. Muestra el toast usando el mensaje que vino en el JSON
+                                if (res.toast_message) {
+                                    // Usas la función 'toast' que importaste en este componente
+                                    toast.success(res.toast_message);
+
+                                    router.visit(res.redirect, {
+                                        // La visita de Inertia se hace, pero el toast ya se disparó.
+                                        preserveScroll: true,
+                                        onSuccess: () => {
+                                            resolve(); // Resuelve la promesa de MP
+                                        },
+                                    });
+                                }
                             } else {
+                                if (res.message) {
+                                    toast.error(res.message);
+                                }
                                 reject();
                             }
                         })

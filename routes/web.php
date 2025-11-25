@@ -39,3 +39,5 @@ Route::get('/anuncios/{post}/pagar', [PaymentController::class, 'pagar'])
     ->name('anuncios.pagar');
 
 route::post('process-payment',[PaymentController::class,'processPayment'])->name('process.payment');
+
+route::get('/muchas-gracias',[PaymentController::class,'thanks'])->name('thanks');

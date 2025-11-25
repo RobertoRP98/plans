@@ -11,6 +11,7 @@ defineProps({
     },
 });
 
+
 const breadcrumbs = [
     {
         title: 'Anuncios',

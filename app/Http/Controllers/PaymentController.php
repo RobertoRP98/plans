@@ -92,7 +92,7 @@ class PaymentController extends Controller
 
                 return response()->json([
                     'status' => 'success',
-                    'redirect' => route('anuncios.show', $post->slug),
+                    'redirect' => route('thanks'),
                 ]);
             }
             Log::info('✅ Resultado del pago', json_decode(json_encode($pay), true));
@@ -115,6 +115,10 @@ class PaymentController extends Controller
             Log::error('❌ ERROR GENERAL: ' . $e->getMessage());
             return response()->json(['status' => 'error', 'message' => 'Error general']);
         }
+    }
+
+    public function thanks(){
+        return Inertia::render('Payments/Thanks');
     }
 
 
