@@ -27,7 +27,7 @@ class CreateNewUser implements CreatesNewUsers
                 'max:255',
                 Rule::unique(User::class),
             ],
-             'phone' => [
+            'phone' => [
                 'required',
                 'string',
                 'max:255',
@@ -35,12 +35,17 @@ class CreateNewUser implements CreatesNewUsers
             ],
             'password' => $this->passwordRules(),
         ])->validate();
-
-        return User::create([
+            //Creamos el usuario y la variable para darle role
+        $user =  User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => $input['password'],
             'phone' => $input['phone']
         ]);
+
+        // Asigna el rol por defecto
+        $user->assignRole('Usuario');
+
+         return $user;
     }
 }

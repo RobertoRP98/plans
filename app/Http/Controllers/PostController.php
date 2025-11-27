@@ -16,12 +16,12 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
         $categories = Category::all();
         $states = State::all();
         $municipios = Municipio::all();
@@ -37,6 +37,15 @@ class PostController extends Controller
             'plans' => $plans,
             'phone' => $phone
         ]);
+    }
+
+    public function dataIndex()
+    {
+        return datatables()
+            ->eloquent(Post::query())
+            ->addColumn('active_text', fn($post) => $post->active ? 'Si' : 'No')
+            ->addColumn('premium_text', fn($post) => $post->is_premium ? 'Si' : 'No')
+            ->toJson();
     }
 
     /**
@@ -107,6 +116,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+         $this->authorize('view',$post);
         // Incrementa el contador de vistas
         $post->increment('views');
 
@@ -136,6 +146,8 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
+        $this->authorize('update',$post);
+
         $post->update([
             'title' => $request->title,
             'description' => $request->description,

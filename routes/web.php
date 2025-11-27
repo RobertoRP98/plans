@@ -8,10 +8,12 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StateController;
+use App\Http\Controllers\PublicController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MunicipioController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PostClientController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -36,6 +38,8 @@ route::resource('/estados', StateController::class)->parameters([
     'estados' => 'state',
 ]);
 
+Route::middleware('auth')->group(function () {
+
 route::resource('/municipios', MunicipioController::class);
 
 route::resource('/categorias', CategoryController::class)->parameters(['categorias' => 'category']);
@@ -50,3 +54,9 @@ Route::get('/anuncios/{post}/pagar', [PaymentController::class, 'pagar'])
 route::post('process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
 
 route::get('/muchas-gracias', [PaymentController::class, 'thanks'])->name('thanks');
+
+});
+
+
+route::get('mis-anuncios',[PostClientController::class,'misAnuncios'])->name('mis.anuncios');
+//route::get('/anuncio/{post}',[PostPublicController::class,'anuncioPublico'])->name('anuncio.publico');

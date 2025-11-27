@@ -225,7 +225,7 @@ const breadcrumbs = [
                                     :class="
                                         buttonVariants({ variant: 'ghost' })
                                     "
-                                    href="/municipios"
+                                    href="/mis-anuncios"
                                     >Cancelar</Link
                                 >
                             </div>

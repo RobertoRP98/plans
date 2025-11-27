@@ -9,6 +9,8 @@ import { show } from '@/routes/two-factor';
 import { edit as editPassword } from '@/routes/user-password';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
+import { buttonVariants } from '@/components/ui/button';
+
 
 const sidebarNavItems: NavItem[] = [
     {
@@ -38,6 +40,11 @@ const currentPath = typeof window !== undefined ? window.location.pathname : '';
             title="Settings"
             description="Manage your profile and account settings"
         />
+
+    <div class="">
+            <Link href="/" :class="buttonVariants({variant:'destructive'})">Regresar</Link>
+    </div>
+
 
         <div class="flex flex-col lg:flex-row lg:space-x-12">
             <aside class="w-full max-w-xl lg:w-48">

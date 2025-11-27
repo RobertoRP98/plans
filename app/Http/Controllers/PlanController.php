@@ -17,11 +17,12 @@ class PlanController extends Controller
         return Inertia::render('Plans/Index');
     }
 
-    public function dataIndex(){
+    public function dataIndex()
+    {
         return datatables()
-        ->eloquent(Plan::query())
-        ->addColumn('active_text',fn($plan)=>$plan->active ? 'Si':'No')
-        ->toJson();
+            ->eloquent(Plan::query())
+            ->addColumn('active_text', fn($plan) => $plan->active ? 'Si' : 'No')
+            ->toJson();
     }
 
     /**
@@ -38,19 +39,19 @@ class PlanController extends Controller
     public function store(StorePlanRequest $request)
     {
 
-        $plan = $request->validated();        
+        $plan = $request->validated();
 
         Plan::create($plan);
 
         return redirect()->route('planes.index');
-     }
+    }
 
     /**
      * Display the specified resource.
      */
     public function show(Plan $plan)
     {
-        return Inertia::render('Plans/Show',[
+        return Inertia::render('Plans/Show', [
             'plan' => $plan
         ]);
     }
@@ -60,7 +61,7 @@ class PlanController extends Controller
      */
     public function edit(Plan $plan)
     {
-        return Inertia::render('Plans/Edit', ['plan'=>$plan]);
+        return Inertia::render('Plans/Edit', ['plan' => $plan]);
     }
 
     /**

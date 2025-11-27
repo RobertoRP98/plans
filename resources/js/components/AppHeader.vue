@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppLogo from '@/components/AppLogo.vue';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
-import { Building,ListCheck,House,NotebookPen,Eye,ShieldCheck } from 'lucide-vue-next';
+import { Building,ListCheck,House,NotebookPen,Eye,ShieldCheck,Megaphone } from 'lucide-vue-next';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -96,6 +96,12 @@ const mainNavItems: NavItem[] = [
         title: 'Usuarios',
         href: '/users',
         icon: ShieldCheck,
+    },
+
+      {
+        title: 'Mis anuncios',
+        href: '/mis-anuncios',
+        icon: Megaphone,
     },
 ];
 

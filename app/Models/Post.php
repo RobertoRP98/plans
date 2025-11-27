@@ -53,4 +53,7 @@ class Post extends Model
     {
         return 'slug';
     }
+
+    protected $casts = ['active' => 'boolean', 'is_premium' => 'boolean'];
+
 }

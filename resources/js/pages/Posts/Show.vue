@@ -73,8 +73,8 @@ const breadcrumbs = [
                          <div
                             class="flex items-center justify-between space-x-4"
                         >
-                            <Link href="/anuncios" :class="buttonVariants({variant: 'ghost'})">
-                                Ver Anuncios
+                            <Link href="/mis-anuncios" :class="buttonVariants({variant: 'ghost'})">
+                                Ver Mis Anuncios
                             </Link>
 
                             <div>

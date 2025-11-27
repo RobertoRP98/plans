@@ -1,17 +1,10 @@
 <script setup>
 import { Button, buttonVariants } from '@/components/ui/button';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
 import AppLayout from '@/layouts/app/AppHeaderLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import {ref} from 'vue';
 import Create from '@/pages/Posts/Create.vue';
+import { DataTable } from 'datatables.net-vue3';
 
 defineProps({
     posts: {
@@ -41,6 +34,32 @@ defineProps({
     }
 });
 
+
+const columns = [
+    {data: 'id', title:'#'},
+    {data:'title', title: 'Titulo'},
+    {data:'start',title:'Inicio'},
+    {data:'end', title:'Fin'},
+    {data:'views', title:'Vistas'},
+    {data:'active_text',title:'Activo'},
+    {data:'premium_text',title:'Premium'},
+    {data:'status',title:'Status'},
+      {
+        data: null,
+        title: 'Opciones',
+        orderable: false,
+        searchable: false,
+        render: function (data, type, row) {
+            return `
+            <div class="flex gap-2 justify-center">
+                <a href="/anuncios/${row.slug}" class="px-2 py-1 text-sm bg-blue-500 text-white rounded">Ver</a>
+                <a href="/anuncios/${row.slug}/edit" class="px-2 py-1 text-sm bg-amber-500 text-white rounded">Editar</a>
+            </div>
+        `;
+        },
+    },
+];
+
 const openModal = ref(false);
 
 const breadcrumbs = [
@@ -54,6 +73,8 @@ const breadcrumbs = [
         href: '/#',
     },
 ];
+
+
 </script>
 
 <template>
@@ -79,58 +100,22 @@ const breadcrumbs = [
                 ></Create>
             </div>
 
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>#</TableHead>
-                        <TableHead>Titulo</TableHead>
-                        <TableHead>Inicio</TableHead>
-                        <TableHead>Fin</TableHead>
-                        <TableHead>Vistas</TableHead>
-                        <TableHead>Activo</TableHead>
-                        <TableHead>Premium</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead class="w-120px">Opciones</TableHead>
-                    </TableRow>
-                </TableHeader>
+            <div class="div p-6 text-gray-900">
+                <DataTable
+                id="anuncios"
+                :columns="columns"
+                class="display w-full stripe"
+                :options="{
+                    responsive:true,
+                    serverSide:true,
+                    processing:true,
+                    ajax:'api/anuncios/datos',
+                    order:[0,'desc'],
+                }">
 
-                <TableBody>
-                    <TableRow v-for="post in posts" :key="post.id">
-                        <TableCell>{{ post.id }}</TableCell>
-                        <TableCell>{{ post.title }}</TableCell>
-                        <TableCell>{{ post.start }}</TableCell>
-                        <TableCell>{{ post.end }}</TableCell>
-                        <TableCell>{{ post.views }}</TableCell>
-                        <TableCell>{{ post.active ? 'Si' : 'No' }}</TableCell>
-                        <TableCell>{{
-                            post.is_premium ? 'Si' : 'No'
-                        }}</TableCell>
-                        <TableCell>{{ post.status }}</TableCell>
-                        <TableCell class="space-x-2">
-                            <Link
-                                :href="`/anuncios/${post.slug}`"
-                                :class="
-                                    buttonVariants({ variant: 'secondary' })
-                                "
-                                >Show</Link
-                            >
-
-                            <Link
-                                :href="`/anuncios/${post.slug}/edit`"
-                                :class="buttonVariants({ variant: 'default' })"
-                                >Edit</Link
-                            >
-
-                            <!-- <Button
-                                variant="destructive"
-                                @click="deleteState(municipio.id)"
-                                class="ml-2"
-                                >Delete</Button
-                            > -->
-                        </TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
+                </DataTable>
+            </div>
+         
         </div>
     </AppLayout>
 </template>
