@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/layouts/app/AppHeaderLayout.vue';
-import { Head, router, usePage } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 import { onMounted } from 'vue';
 import { toast } from 'vue-sonner';
 
@@ -43,8 +43,8 @@ function initBrick() {
             paymentMethods: {
                 creditCard: 'all',
                 debitCard: 'all',
-                onboarding_credits: 'all',
-                wallet_purchase: 'all',
+                // onboarding_credits: 'all',
+                // wallet_purchase: 'all',
                 maxInstallments: 3,
             },
         },
@@ -73,23 +73,10 @@ function initBrick() {
                         .then((res) => res.json())
                         .then((res) => {
                             if (res.status === 'success') {
-                                // 1. Muestra el toast usando el mensaje que vino en el JSON
-                                if (res.toast_message) {
-                                    // Usas la función 'toast' que importaste en este componente
-                                    toast.success(res.toast_message);
-
-                                    router.visit(res.redirect, {
-                                        // La visita de Inertia se hace, pero el toast ya se disparó.
-                                        preserveScroll: true,
-                                        onSuccess: () => {
-                                            resolve(); // Resuelve la promesa de MP
-                                        },
-                                    });
-                                }
+                                window.location.href = res.redirect;
+                                return;
                             } else {
-                                if (res.message) {
-                                    toast.error(res.message);
-                                }
+                                toast.error(res.message || 'Error en el pago');
                                 reject();
                             }
                         })
