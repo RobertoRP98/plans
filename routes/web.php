@@ -16,9 +16,9 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('anuncios', function () {
+    return Inertia::render('Posts/Index');
+})->middleware(['auth', 'verified'])->name('anuncios.index');
 
 require __DIR__ . '/settings.php';
 

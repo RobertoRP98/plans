@@ -164,7 +164,7 @@ const rightNavItems: NavItem[] = [
                     </Sheet>
                 </div>
 
-                <Link href="/planes" class="flex items-center gap-x-2">
+                <Link href="/anuncios" class="flex items-center gap-x-2">
                     <AppLogo />
                 </Link>
 
