@@ -1,7 +1,6 @@
 <script setup>
 import { buttonVariants } from '@/components/ui/button';
 import AppLayout from '@/layouts/app/AppHeaderLayout.vue';
-import { dashboard } from '@/routes';
 import { Head, Link } from '@inertiajs/vue3';
 import { DataTable } from 'datatables.net-vue3';
 
@@ -30,8 +29,8 @@ const columns = [
 
 const breadcrumbs = [
     {
-        title: 'Dashboard',
-        href: dashboard().url,
+        title: 'Anuncios',
+        href: "/anuncios",
     },
 ];
 </script>

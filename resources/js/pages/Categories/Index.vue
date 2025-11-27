@@ -9,7 +9,6 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import AppLayout from '@/layouts/app/AppHeaderLayout.vue';
-import { dashboard } from '@/routes';
 import { Head, Link} from '@inertiajs/vue3';
 import {deleteState} from '@/composables/useState'
 
@@ -24,8 +23,8 @@ defineProps({
 
 const breadcrumbs = [
     {
-        title: 'Dashboard',
-        href: dashboard().url,
+        title: 'Anuncios',
+        href: "/anuncios",
     },
 ];
 
