@@ -1,5 +1,6 @@
 import '../css/app.css';
-
+import { Ziggy } from './ziggy';
+import { ZiggyVue, route } from 'ziggy-js';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
@@ -12,6 +13,7 @@ import DataTableResponsive from 'datatables.net-responsive-dt'
 // Importa los estilos de DataTables y del módulo responsive
 import 'datatables.net-dt/css/dataTables.dataTables.css'
 import 'datatables.net-responsive-dt/css/responsive.dataTables.css'
+
  
 DataTable.use(DataTablesLib);
 DataTable.use(DataTableResponsive);
@@ -23,12 +25,13 @@ createInertiaApp({
     resolve: (name) =>
         resolvePageComponent(
             `./pages/${name}.vue`,
-            import.meta.glob<DefineComponent>('./pages/**/*.vue'),
+            import.meta.glob<DefineComponent>('./pages/**/*.vue')
         ),
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
-            .component('DataTable', DataTable) 
+            .use(ZiggyVue, Ziggy)
+            .component('DataTable', DataTable)
             .mount(el);
     },
     progress: {

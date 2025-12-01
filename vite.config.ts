@@ -5,6 +5,11 @@ import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+    resolvere: {
+    alias:{
+        'ziggy-js': '/vendor/tightenco/ziggy/dist/index.esm.js',
+    } 
+},
     plugins: [
         laravel({
             input: ['resources/js/app.ts'],
@@ -27,11 +32,11 @@ export default defineConfig({
     ],
 
       server: {
-    host: 'localhost',   // 👈 Fuerza IPv4
+    host: 'localhost',   // Fuerza IPv4
     port: 5173,
     strictPort: true,
     hmr: {
-      host: 'localhost', // 👈 Corrige las rutas del archivo HOT
+      host: 'localhost', // Corrige las rutas del archivo HOT
     }},
 
 });
