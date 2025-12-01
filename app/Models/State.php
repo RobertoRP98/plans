@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class State extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name','slug'];
 
     public function municipios(): HasMany
     {

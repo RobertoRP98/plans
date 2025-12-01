@@ -6,8 +6,7 @@ use Inertia\Inertia;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-
-
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -36,6 +35,8 @@ class CategoryController extends Controller
     {
         $category = $request->validated();
 
+        $category['slug'] = Str::slug($category['name']);
+
         Category::create($category);
 
         return redirect()->route('categorias.index');
@@ -59,8 +60,10 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return Inertia::render('Categories/Edit', 
-        ['category' => $category]);
+        return Inertia::render(
+            'Categories/Edit',
+            ['category' => $category]
+        );
     }
 
     /**
@@ -68,8 +71,13 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $category->update($request->validated());
 
+        $data = $request->validated();
+
+        $data['slug'] = Str::slug($data['name']);
+        
+        $category->update($data);
+        
         return redirect()->route('categorias.index');
     }
 

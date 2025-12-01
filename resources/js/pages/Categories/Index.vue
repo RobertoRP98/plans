@@ -49,6 +49,7 @@ const breadcrumbs = [
                 <TableHeader>
                     <TableRow>
                         <TableHead>Nombre</TableHead>
+                        <TableHead>Slug</TableHead>
                         <TableHead>Descripción</TableHead>
                         <TableHead>Activo</TableHead>
                         <TableHead class="w-120px">Opciones</TableHead>
@@ -58,6 +59,7 @@ const breadcrumbs = [
                 <TableBody>
                     <TableRow v-for="category in categories" :key="category.id">
                         <TableCell>{{ category.name }}</TableCell>
+                        <TableCell>{{ category.slug }}</TableCell>
                         <TableCell>{{ category.description }}</TableCell>
                         <TableCell>{{ category.active ? 'SI':'NO' }}</TableCell>
 

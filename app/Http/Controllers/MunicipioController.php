@@ -6,6 +6,7 @@ use App\Models\Municipio;
 use App\Http\Requests\StoreMunicipioRequest;
 use App\Http\Requests\UpdateMunicipioRequest;
 use App\Models\State;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class MunicipioController extends Controller
@@ -38,6 +39,8 @@ class MunicipioController extends Controller
     public function store(StoreMunicipioRequest $request)
     {
         $municipio = $request->validated();
+
+        $municipio ['slug'] = Str::slug($municipio['name']);
 
         Municipio::create($municipio);
 
@@ -74,8 +77,12 @@ class MunicipioController extends Controller
      */
     public function update(UpdateMunicipioRequest $request, Municipio $municipio)
     {
-        $municipio->update($request->validated());
+        $data = $request->validated();
 
+        $data['slug'] = Str::slug($data['name']);
+
+        $municipio->update($data);
+        
         return redirect()->route('municipios.index');
     }
 

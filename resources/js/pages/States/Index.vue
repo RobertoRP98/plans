@@ -47,6 +47,8 @@ const breadcrumbs = [
                 <TableHeader>
                     <TableRow>
                         <TableHead>Nombre</TableHead>
+                        <TableHead>Slug</TableHead>
+
                         <TableHead class="w-120px">Opciones</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -54,6 +56,7 @@ const breadcrumbs = [
                 <TableBody>
                     <TableRow v-for="state in states" :key="state.id">
                         <TableCell>{{ state.name }}</TableCell>
+                        <TableCell>{{ state.slug }}</TableCell>
                         <TableCell class="space-x-2">
                             <Link
                                 :href="`/estados/${state.id}`"

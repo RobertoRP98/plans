@@ -13,7 +13,7 @@ import {Switch} from '@/components/ui/switch';
 const form = useForm({
     name: '',
     description: '',
-    active: '',
+    active: true,
 });
 
 const handleSubmit = () => {

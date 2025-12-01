@@ -6,6 +6,7 @@ use App\Models\State;
 use App\Http\Requests\StoreStateRequest;
 use App\Http\Requests\UpdateStateRequest;
 use GuzzleHttp\Promise\Create;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class StateController extends Controller
@@ -38,6 +39,8 @@ class StateController extends Controller
 
         $state = $request->validated();
 
+        $state['slug'] = Str::slug($state['name']);
+        
         State::create($state);
 
         return redirect()->route('estados.index');
@@ -76,7 +79,12 @@ class StateController extends Controller
      */
     public function update(UpdateStateRequest $request, State $state)
     {
-        $state->update($request->validated());
+
+        $data = $request->validated();
+
+        $data['slug'] = Str::slug($data['name']);
+
+        $state->update($data);
 
         return redirect()->route('estados.index');
     }

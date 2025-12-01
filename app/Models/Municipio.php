@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Municipio extends Model
 {
-    protected $fillable = ['name', 'state_id', 'active'];
+    protected $fillable = ['name', 'slug', 'state_id', 'active'];
 
     protected $casts = [
         'active' => 'boolean',
@@ -19,7 +19,8 @@ class Municipio extends Model
         return $this->belongsTo(State::class);
     }
 
-    public function post():HasMany{
+    public function post(): HasMany
+    {
         return $this->HasMany(Post::class);
     }
 }

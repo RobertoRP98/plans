@@ -62,6 +62,7 @@ const breadcrumbs = [
                 <TableHeader>
                     <TableRow>
                         <TableHead>Nombre</TableHead>
+                        <TableHead>Slug</TableHead>
                         <TableHead>Estado</TableHead>
                         <TableHead>Activo</TableHead>
                         <TableHead class="w-120px">Opciones</TableHead>
@@ -71,6 +72,7 @@ const breadcrumbs = [
                 <TableBody>
                     <TableRow v-for="municipio in municipios" :key="municipio.id">
                         <TableCell>{{ municipio.name }}</TableCell>
+                        <TableCell>{{ municipio.slug }}</TableCell>
                         <TableCell>{{ municipio.state.name }}</TableCell>
                         <TableCell>{{ municipio.active ? 'Si':'No'}}</TableCell>
                         <TableCell class="space-x-2">
