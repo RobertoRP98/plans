@@ -18,3 +18,8 @@ route::get('anuncios/datos',[PostController::class,'dataIndex'])->name('anuncios
 Route::get('/municipios/{state}', function ($state) {
     return Municipio::where('state_id', $state)->get();
 });
+
+Route::get('/municipiosSelect/{stateSlug}', function ($stateSlug) {
+    $state = \App\Models\State::where('slug', $stateSlug)->firstOrFail();
+    return \App\Models\Municipio::where('state_id', $state->id)->get();
+});

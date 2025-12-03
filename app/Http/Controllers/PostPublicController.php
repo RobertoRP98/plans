@@ -24,6 +24,9 @@ class PostPublicController extends Controller
 
     public function indexPublic($state, $municipio = null, $category = null, $search = null)
     {
+        $stateSearch = State::all();
+        $categoriesSearch = Category::all();
+
         $estado = State::where('slug', $state)->firstOrFail();
 
         $query = Post::query()
@@ -42,19 +45,22 @@ class PostPublicController extends Controller
             $query->where('category_id', $category->id);
         }
 
-        if ($search) {
+        $search = request()->query('search');
 
+        if ($search) {
             // convierte "-" en espacios (si viene como slug)
-            $search = str_replace('-', ' ', $search);
+            // $search = str_replace('-', ' ', $search);
             $query->where('title', 'LIKE', "%{$search}%");
         }
 
         return Inertia::render('Solicitantes/Index', [
             'anuncios' => $query->paginate(20),
             'state' => $state,
-            'municipio' => $municipio,
-            'categoria' => $category,
-            'search' => $search,
+            'municipio' => $municipio ? $municipio->slug : null,
+            'category' => $category ? $category->slug:null,
+            'searchquery' => $search,
+            'stateSearch' => $stateSearch,
+            'categoriesSearch' => $categoriesSearch,
         ]);
     }
 }
