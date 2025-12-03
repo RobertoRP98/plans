@@ -22,45 +22,64 @@ class PostPublicController extends Controller
     }
 
 
-    public function indexPublic($state, $municipio = null, $category = null, $search = null)
+    public function indexPublic($state, $category = null, $municipio = null, $search = null)
     {
-        $stateSearch = State::all();
-        $categoriesSearch = Category::all();
+        // normalizar valores vacios
+
+        $searchquery = null;
+
+        if ($search && str_starts_with($search, 'buscar-')) {
+            $searchquery = str_replace('buscar-', '', $search);
+            $searchquery = str_replace('-', ' ', $searchquery);
+        }
+
+        $municipio = $municipio === '' ? null : $municipio;
+        $category = $category === '' ? null : $category;
+
+        if (is_null($municipio) && !is_null($category)) {
+            $tmpMunicipio = Municipio::where('slug', $category)
+                ->whereHas('state', fn($q) => $q->where('slug', $state))
+                ->first();
+
+            if ($tmpMunicipio) {
+                //category realmente era municipio - hacen un intercambio de espacios
+
+                $municipio = $category;
+                $category = null;
+            }
+        }
 
         $estado = State::where('slug', $state)->firstOrFail();
 
-        $query = Post::query()
-            ->where('state_id', $estado->id);
+        $query = Post::query()->where('state_id', $estado->id);
 
-        if ($municipio) {
-            $municipio = Municipio::where('slug', $municipio)
+        if (!is_null($municipio)) {
+            $municipioModel = Municipio::where('slug', $municipio)
                 ->where('state_id', $estado->id)
                 ->firstOrFail();
 
-            $query->where('municipio_id', $municipio->id);
+            $query->where('municipio_id', $municipioModel->id);
         }
 
-        if ($category) {
-            $category = Category::where('slug', $category)->firstOrFail();
-            $query->where('category_id', $category->id);
+        if (!is_null($category)) {
+            $categoryModel = Category::where('slug', $category)->firstOrFail();
+            $query->where('category_id', $categoryModel->id);
         }
 
-        $search = request()->query('search');
+        $search = request()->query('searchquery');
 
         if ($search) {
-            // convierte "-" en espacios (si viene como slug)
-            // $search = str_replace('-', ' ', $search);
             $query->where('title', 'LIKE', "%{$search}%");
         }
 
         return Inertia::render('Solicitantes/Index', [
             'anuncios' => $query->paginate(20),
             'state' => $state,
-            'municipio' => $municipio ? $municipio->slug : null,
-            'category' => $category ? $category->slug:null,
+            'municipio' => $municipio,
+            'category' => $category,
             'searchquery' => $search,
-            'stateSearch' => $stateSearch,
-            'categoriesSearch' => $categoriesSearch,
+            'stateSearch' => State::all(),
+            'categoriesSearch' => Category::all(),
         ]);
     }
 }

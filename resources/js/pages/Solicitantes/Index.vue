@@ -1,19 +1,10 @@
 <script setup>
 import AppLayout from '@/layouts/app/AppHeaderLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
-import { ref, watch,onMounted } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { route } from 'ziggy-js';
 
 console.log(window.Ziggy);
-
-
-onMounted(async () => {
-    if (selectedState.value) {
-        const res = await fetch(`/api/municipiosSelect/${selectedState.value}`);
-        municipios.value = await res.json();
-    }
-});
-
 
 const props = defineProps({
     stateSearch: Array,
@@ -22,8 +13,8 @@ const props = defineProps({
     municipio: String,
     category: String,
     searchquery: String,
+    anuncios: Object,
 });
-
 
 //VALORES A BUSCAR - SELECCIONANDO
 const stateSearch = props.stateSearch;
@@ -50,18 +41,30 @@ watch(selectedState, async (value) => {
     municipios.value = await res.json();
 });
 
+
 const buscar = () => {
-    router.get(
-        route('index.public', {
-            state: selectedState.value,
-            municipio: selectedMunicipio.value || undefined,
-            category: selectedCategory.value || undefined,
-        }),
-        {
-            searchquery: searchquery.value || undefined,
-        },
-    );
+    let urlParams = [selectedState.value];
+
+    if (selectedCategory.value) {
+        urlParams.push(selectedCategory.value);
+    }
+
+    if (selectedMunicipio.value) {
+        urlParams.push(selectedMunicipio.value);
+    }
+
+ 
+
+    router.get(route('index.public', urlParams)+  `?searchquery=${encodeURIComponent(searchquery.value || '')}`);
 };
+
+
+onMounted(async () => {
+    if (selectedState.value) {
+        const res = await fetch(`/api/municipiosSelect/${selectedState.value}`);
+        municipios.value = await res.json();
+    }
+});
 </script>
 
 <template>
@@ -121,5 +124,7 @@ const buscar = () => {
         >
             Buscar
         </button>
+
+        <pre>{{ props.anuncios.data }}</pre>
     </AppLayout>
 </template>

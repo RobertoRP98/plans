@@ -33,8 +33,10 @@ Route::resource('roles', RoleController::class);
 Route::get('roles/{roleId}/give-permissions', [RoleController::class, 'addPermissionToRole']);
 Route::patch('roles/{roleId}/give-permissions', [RoleController::class, 'givePermissionToRole']);
 
+Route::get('/solicitantes/{state}/{category?}/{municipio?}/{search?}', 
+    [PostPublicController::class, 'indexPublic']
+)->name('index.public');
 
-Route::get('/solicitantes/{state}/{municipio?}/{category?}',[PostPublicController::class,'indexPublic'])->name('index.public');
 
 Route::get('/solicitantes',[PostPublicController::class,'solicitantes'])->name('solicitantes');
 
