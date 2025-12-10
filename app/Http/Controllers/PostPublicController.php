@@ -21,12 +21,18 @@ class PostPublicController extends Controller
         ]);
     }
 
+    
+
 
     public function indexPublic($state, $category = null, $municipio = null, $search = null)
     {
         // normalizar valores vacios
 
         $searchquery = null;
+
+        if ($municipio === '_' || $municipio === '') {
+            $municipio = null;
+        }
 
         if ($search && str_starts_with($search, 'buscar-')) {
             $searchquery = str_replace('buscar-', '', $search);

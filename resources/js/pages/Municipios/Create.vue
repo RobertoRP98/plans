@@ -51,7 +51,7 @@ const breadcrumbs = [
 </script>
 
 <template>
-    <Head title="Crear Estado" />
+    <Head title="Crear Municipio" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div

@@ -17,6 +17,8 @@ import 'datatables.net-responsive-dt/css/responsive.dataTables.css'
  
 DataTable.use(DataTablesLib);
 DataTable.use(DataTableResponsive);
+DataTable.use(DataTablesCore);
+
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

@@ -10,9 +10,6 @@ import {
 } from '@/components/ui/table';
 import AppLayout from '@/layouts/app/AppHeaderLayout.vue';
 import { Head, Link} from '@inertiajs/vue3';
-import {deleteState} from '@/composables/useState'
-
-
 
 defineProps({
     categories: {
@@ -27,9 +24,6 @@ const breadcrumbs = [
         href: "/anuncios",
     },
 ];
-
-
-
 
 </script>
 
