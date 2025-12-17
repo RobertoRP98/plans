@@ -39,6 +39,7 @@ Route::get('/solicitantes/{state}/{category?}/{municipio?}/{search?}',
 
 
 Route::get('/solicitantes',[PostPublicController::class,'solicitantes'])->name('solicitantes');
+route::get('/solicitante/{post}',[PostPublicController::class,'showPublic'])->name('solicitante.public');
 
 route::resource('/estados', StateController::class)->parameters([
     'estados' => 'state',

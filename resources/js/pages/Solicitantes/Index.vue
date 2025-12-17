@@ -230,7 +230,7 @@ onMounted(async () => {
     <Link
         v-for="anuncio in props.anuncios.data"
         :key="anuncio.slug"
-        :href="route('anuncios.show', anuncio.slug)"
+        :href="route('solicitante.public', anuncio.slug)"
         class="block"
     >
         <Card

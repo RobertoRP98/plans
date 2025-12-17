@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import AppLogo from '@/components/AppLogo.vue';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
-import { Building,ListCheck,House,NotebookPen,Eye,ShieldCheck,Megaphone,UserRoundPen } from 'lucide-vue-next';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -32,9 +31,19 @@ import {
 import UserMenuContent from '@/components/UserMenuContent.vue';
 import { getInitials } from '@/composables/useInitials';
 import { toUrl, urlIsActive } from '@/lib/utils';
-import type { BreadcrumbItem, NavItem } from '@/types';
+import type { BreadcrumbItem, NavItem, User } from '@/types';
 import { InertiaLinkProps, Link, usePage } from '@inertiajs/vue3';
-import { Menu } from 'lucide-vue-next';
+import {
+    Building,
+    Eye,
+    House,
+    ListCheck,
+    Megaphone,
+    Menu,
+    NotebookPen,
+    ShieldCheck,
+    UserRoundPen,
+} from 'lucide-vue-next';
 import { computed } from 'vue';
 
 interface Props {
@@ -46,7 +55,10 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const page = usePage();
-const auth = computed(() => page.props.auth);
+
+const user = computed<User | null>(() => {
+    return page.props.auth?.user ?? null;
+});
 
 const isCurrentRoute = computed(
     () => (url: NonNullable<InertiaLinkProps['href']>) =>
@@ -61,8 +73,7 @@ const activeItemStyles = computed(
 );
 
 const mainNavItems: NavItem[] = [
- 
-     {
+    {
         title: 'Estados',
         href: '/estados',
         icon: Building,
@@ -74,19 +85,19 @@ const mainNavItems: NavItem[] = [
         icon: House,
     },
 
-     {
+    {
         title: 'Categorias',
         href: '/categorias',
         icon: ListCheck,
     },
-    
-     {
+
+    {
         title: 'Planes',
         href: '/planes',
         icon: NotebookPen,
     },
 
-     {
+    {
         title: 'Anuncios',
         href: '/anuncios',
         icon: Eye,
@@ -98,27 +109,27 @@ const mainNavItems: NavItem[] = [
         icon: ShieldCheck,
     },
 
-      {
+    {
         title: 'Mis anuncios',
         href: '/mis-anuncios',
         icon: Megaphone,
     },
 
-     {
+    {
         title: 'Solicitantes',
         href: '/solicitantes',
         icon: UserRoundPen,
     },
 ];
 
-const rightNavItems: NavItem[] = [
-   
-];
+const rightNavItems: NavItem[] = [];
 </script>
 
 <template>
-    <div>
-        <div class="border-b border-sidebar-border/80 bg-[#fca5a5] text-[#4a1f1f]">
+    <div v-if="user">
+        <div
+            class="border-b border-sidebar-border/80 bg-[#fca5a5] text-[#4a1f1f]"
+        >
             <div class="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
                 <!-- Mobile Menu -->
                 <div class="lg:hidden">
@@ -228,7 +239,6 @@ const rightNavItems: NavItem[] = [
                             size="icon"
                             class="group h-9 w-9 cursor-pointer"
                         >
-                           
                         </Button>
 
                         <div class="hidden space-x-1 lg:flex">
@@ -269,7 +279,7 @@ const rightNavItems: NavItem[] = [
                         </div>
                     </div>
 
-                    <DropdownMenu>
+                    <DropdownMenu v-if="user">
                         <DropdownMenuTrigger :as-child="true">
                             <Button
                                 variant="ghost"
@@ -280,22 +290,24 @@ const rightNavItems: NavItem[] = [
                                     class="size-8 overflow-hidden rounded-full"
                                 >
                                     <AvatarImage
-                                        v-if="auth.user.avatar"
-                                        :src="auth.user.avatar"
-                                        :alt="auth.user.name"
+                                        v-if="user.avatar"
+                                        :src="user.avatar"
+                                        :alt="user.name"
                                     />
                                     <AvatarFallback
                                         class="rounded-lg bg-neutral-200 font-semibold text-black dark:bg-neutral-700 dark:text-white"
                                     >
-                                        {{ getInitials(auth.user?.name) }}
+                                        {{ getInitials(user.name) }}
                                     </AvatarFallback>
                                 </Avatar>
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" class="w-56">
-                            <UserMenuContent :user="auth.user" />
+                            <UserMenuContent :user="user" />
                         </DropdownMenuContent>
                     </DropdownMenu>
+
+                    
                 </div>
             </div>
         </div>
@@ -311,4 +323,47 @@ const rightNavItems: NavItem[] = [
             </div>
         </div>
     </div>
+
+    
+       <!-- USUARIO NO LOGUEADO -->
+        
+    <div
+    v-else
+    class="border-b bg-[#fca5a5] text-[#4a1f1f]"
+>
+    <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+        <!-- IZQUIERDA -->
+        <Link
+            href="/solicitantes"
+            class="text-lg font-bold"
+        >
+            DonadorRapido.mx
+        </Link>
+
+        <!-- DERECHA -->
+        <div class="flex items-center gap-2">
+            <Link href="/login">
+                <Button variant="ghost">
+                    Iniciar sesión
+                </Button>
+            </Link>
+
+            <Link
+                href="/register"
+                class="inline-block rounded-sm border border-[#19140035] hover:border-[#1915014a]"
+            >
+                <Button variant="ghost">
+                    Registrarse
+                </Button>
+            </Link>
+        </div>
+    </div>
+</div>
+
+
+     
+    
 </template>
+
+
+

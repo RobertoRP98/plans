@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PublicPostResource;
 use App\Models\Post;
 use Inertia\Inertia;
 use App\Models\State;
@@ -21,7 +22,7 @@ class PostPublicController extends Controller
         ]);
     }
 
-    
+
 
 
     public function indexPublic($state, $category = null, $municipio = null, $search = null)
@@ -57,7 +58,7 @@ class PostPublicController extends Controller
 
         $estado = State::where('slug', $state)->firstOrFail();
 
-        $query = Post::query()->where('state_id', $estado->id)->with('category','municipio');
+        $query = Post::query()->where('state_id', $estado->id)->with('category', 'municipio');
 
         if (!is_null($municipio)) {
             $municipioModel = Municipio::where('slug', $municipio)
@@ -87,6 +88,20 @@ class PostPublicController extends Controller
             'searchquery' => $search,
             'stateSearch' => State::all(),
             'categoriesSearch' => Category::all(),
+        ]);
+    }
+
+    public function showPublic(Post $post)
+    {
+        $post->increment('views');
+
+        $post->load('user', 'category', 'state', 'municipio');
+
+        return Inertia::render('Solicitantes/Show', [
+            'post' => new PublicPostResource($post),
+            'backUrl' => url()->previous() !== url()->current()
+                ? url()->previous()
+                : route('solicitantes'),
         ]);
     }
 }
