@@ -3,8 +3,14 @@ import AppLayout from '@/layouts/app/AppHeaderLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import { onMounted, ref, watch } from 'vue';
 import { route } from 'ziggy-js';
-
+import {Link} from '@inertiajs/vue3'
 import { Button } from '@/components/ui/button';
+//IMPORTS PARA LAS TARJERTAS DE ANUNCIOS
+import {
+    Card,
+    CardContent,
+} from '@/components/ui/card';
+
 import { Input } from '@/components/ui/input';
 import {
     Select,
@@ -214,13 +220,79 @@ onMounted(async () => {
 
             <!-- BOTÓN -->
             <div class="col-span-full md:col-span-2 lg:col-span-1">
-                <Button @click="buscar" class="w-full text-bg-dark text-white">
+                <Button @click="buscar" class="text-bg-dark w-full text-white">
                     Buscar
                 </Button>
             </div>
         </div>
 
-        <!-- DEBUG -->
-        <pre>{{ props.anuncios.data }}</pre>
+    <div class="my-6 flex flex-col gap-4">
+    <Link
+        v-for="anuncio in props.anuncios.data"
+        :key="anuncio.slug"
+        :href="route('anuncios.show', anuncio.slug)"
+        class="block"
+    >
+        <Card
+            class="bg-slate-50 border border-slate-200 transition hover:bg-white hover:shadow-md"
+        >
+            <CardContent class="p-4">
+                <!-- MUNICIPIO (arriba derecha) -->
+                <div class="mb-2 flex justify-end">
+                    <span
+                        class="rounded-full bg-slate-200 px-3 py-1 text-xs font-medium text-slate-700"
+                    >
+                        {{ anuncio.municipio?.name }}
+                    </span>
+                </div>
+
+                <div class="flex gap-4">
+                    <!-- CATEGORÍA (izquierda) -->
+                    <div
+                        class="min-w-[110px] self-start rounded-md bg-blue-100 px-3 py-2 text-center text-xs font-semibold uppercase text-blue-700"
+                    >
+                        {{ anuncio.category?.name }}
+                    </div>
+
+                    <!-- TEXTO -->
+                    <div class="flex-1">
+                        <h3
+                            class="text-sm font-semibold text-slate-900"
+                        >
+                            {{ anuncio.title }}
+                        </h3>
+
+                        <p
+                            class="mt-1 line-clamp-2 text-sm text-slate-600"
+                        >
+                            {{ anuncio.description }}
+                        </p>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+    </Link>
+</div>
+
+<div v-if="props.anuncios.links.length > 3" class="mt-6 flex justify-center">
+    <nav class="flex gap-1">
+        <button
+            v-for="link in props.anuncios.links"
+            :key="link.label"
+            v-html="link.label"
+            :disabled="!link.url"
+            @click="link.url && router.get(link.url, {}, { preserveScroll: false })"
+            class="rounded px-3 py-1 text-sm"
+            :class="[
+                link.active
+                    ? 'bg-red-500 text-white'
+                    : 'bg-white border text-slate-700 hover:bg-slate-300',
+                !link.url && 'opacity-50 cursor-not-allowed',
+            ]"
+        />
+    </nav>
+</div>
+
+
     </AppLayout>
 </template>
