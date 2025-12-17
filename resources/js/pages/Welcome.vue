@@ -23,7 +23,9 @@ withDefaults(
 
         <!-- IZQUIERDA: LOGO / NOMBRE -->
         <div class="text-lg font-bold">
+                <Link href="/solicitantes" class="flex items-center gap-x-2">
             DonadorRapido.mx
+                </Link>
         </div>
 
         <!-- CENTRO: MENU PRINCIPAL -->

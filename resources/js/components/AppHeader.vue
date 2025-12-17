@@ -193,7 +193,7 @@ const rightNavItems: NavItem[] = [];
                     </Sheet>
                 </div>
 
-                <Link href="/anuncios" class="flex items-center gap-x-2">
+                <Link href="/solicitantes" class="flex items-center gap-x-2">
                     <AppLogo />
                 </Link>
 
@@ -331,7 +331,7 @@ const rightNavItems: NavItem[] = [];
     v-else
     class="border-b bg-[#fca5a5] text-[#4a1f1f]"
 >
-    <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+    <div class="mx-auto flex h-18 max-w-7xl items-center justify-between px-6">
         <!-- IZQUIERDA -->
         <Link
             href="/solicitantes"
