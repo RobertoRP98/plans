@@ -142,7 +142,7 @@ onMounted(async () => {
 
     <AppLayout>
         <div
-            class="s: grid grid-cols-1 grid-cols-2 items-end gap-4 md:grid-cols-2 lg:grid-cols-5"
+            class="s: grid grid-cols-1 grid-cols-2 items-end gap-4 md:grid-cols-2 lg:grid-cols-5 mt-1"
         >
             <!-- SELECT ESTADO -->
             <div>
@@ -220,13 +220,13 @@ onMounted(async () => {
 
             <!-- BOTÓN -->
             <div class="col-span-full md:col-span-2 lg:col-span-1">
-                <Button @click="buscar" class="text-bg-dark w-full text-white">
+                <Button @click="buscar" class="text-bg-white w-full text-black bg-white hover:bg-red-500 hover:shadow-md border border-black">
                     Buscar
                 </Button>
             </div>
         </div>
 
-    <div class="my-6 flex flex-col gap-4">
+    <div class="my-1 flex flex-col gap-4">
     <Link
         v-for="anuncio in props.anuncios.data"
         :key="anuncio.slug"
@@ -234,7 +234,7 @@ onMounted(async () => {
         class="block"
     >
         <Card
-            class="bg-slate-50 border border-slate-200 transition hover:bg-white hover:shadow-md"
+            class="bg-red-100 border border-black transition hover:bg-white hover:shadow-md"
         >
             <CardContent class="p-4">
                 <!-- MUNICIPIO (arriba derecha) -->
