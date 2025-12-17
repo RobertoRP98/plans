@@ -85,17 +85,17 @@ const buscar = () => {
         urlParams.push(selectedMunicipio.value);
     }
 
-     const currentSearchQuery = searchquery.value || '';
+    const currentSearchQuery = searchquery.value || '';
 
-     router.get(
+    router.get(
         // Primer argumento: URL/Ruta con parámetros de ruta
-        route('index.public', urlParams), 
-        
+        route('index.public', urlParams),
+
         // Segundo argumento: Objeto de datos (query parameters)
         {
             searchquery: currentSearchQuery,
         },
-        
+
         // Tercer argumento: Opciones de Inertia (aquí va onFinish)
         {
             replace: true,
@@ -104,7 +104,7 @@ const buscar = () => {
                 // Limpiamos el valor del input *después* de que Inertia termina la visita
                 searchquery.value = '';
             },
-        }
+        },
     );
 };
 
@@ -135,78 +135,90 @@ onMounted(async () => {
     <Head title="Solicitantes" />
 
     <AppLayout>
-        <!-- SELECT ESTADO -->
-        <Select v-model="selectedState">
-            <SelectTrigger>
-                <SelectValue placeholder="Selecciona un Estado" />
-            </SelectTrigger>
-
-            <SelectContent>
-                <SelectItem
-                    v-for="estado in stateSearch"
-                    :key="estado.slug"
-                    :value="estado.slug"
-                >
-                    {{ estado.name }}
-                </SelectItem>
-            </SelectContent>
-        </Select>
-
-        <!-- SELECT MUNICIPIO SIN OPCIONES FALSAS -->
-        <Select v-model="selectedMunicipio">
-            <SelectTrigger>
-                <SelectValue placeholder="Selecciona Municipio" />
-            </SelectTrigger>
-            <SelectContent>
-                <SelectItem :value="MUNICIPIO_NULL"
-                    >Todos los municipios</SelectItem
-                >
-                <SelectItem
-                    v-for="m in municipios"
-                    :key="m.slug || m.name"
-                    :value="m.slug"
-                >
-                    {{ m.name }}
-                </SelectItem>
-            </SelectContent>
-        </Select>
-
-        <!-- SELECT CATEGORÍA -->
-        <Select v-model="selectedCategory">
-            <SelectTrigger>
-                <SelectValue placeholder="Seleccione una categoría" />
-            </SelectTrigger>
-
-            <SelectContent>
-                <SelectItem value="_">Todas las categorías</SelectItem>
-
-                <SelectItem
-                    v-for="c in categoriesSearch"
-                    :key="c.slug"
-                    :value="c.slug || '_'"
-                >
-                    {{ c.name }}
-                </SelectItem>
-            </SelectContent>
-        </Select>
-
-        <!-- INPUT BUSCADOR -->
-        <label class="mt-4 mb-1 block">Buscar</label>
-        <Input
-            id="searchquery"
-            v-model="searchquery"
-            type="text"
-            placeholder="Ej. 'se necesita sangre'"
-            class="w-full rounded border p-2"
-        />
-
-        <!-- BOTÓN -->
-        <Button
-            @click="buscar"
-            class="mt-4 w-full rounded bg-blue-600 px-4 py-2 text-white"
+        <div
+            class="s: grid grid-cols-1 grid-cols-2 items-end gap-4 md:grid-cols-2 lg:grid-cols-5"
         >
-            Buscar
-        </Button>
+            <!-- SELECT ESTADO -->
+            <div>
+                <Select v-model="selectedState">
+                    <SelectTrigger>
+                        <SelectValue placeholder="Selecciona un Estado" />
+                    </SelectTrigger>
+
+                    <SelectContent>
+                        <SelectItem
+                            v-for="estado in stateSearch"
+                            :key="estado.slug"
+                            :value="estado.slug"
+                        >
+                            {{ estado.name }}
+                        </SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <!-- SELECT MUNICIPIO -->
+            <div>
+                <Select v-model="selectedMunicipio">
+                    <SelectTrigger>
+                        <SelectValue placeholder="Selecciona Municipio" />
+                    </SelectTrigger>
+
+                    <SelectContent>
+                        <SelectItem :value="MUNICIPIO_NULL">
+                            Todos los municipios
+                        </SelectItem>
+
+                        <SelectItem
+                            v-for="m in municipios"
+                            :key="m.slug"
+                            :value="m.slug"
+                        >
+                            {{ m.name }}
+                        </SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <!-- SELECT CATEGORÍA -->
+            <div>
+                <Select v-model="selectedCategory">
+                    <SelectTrigger>
+                        <SelectValue placeholder="Seleccione una categoría" />
+                    </SelectTrigger>
+
+                    <SelectContent>
+                        <SelectItem value="_">Todas las categorías</SelectItem>
+
+                        <SelectItem
+                            v-for="c in categoriesSearch"
+                            :key="c.slug"
+                            :value="c.slug"
+                        >
+                            {{ c.name }}
+                        </SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <!-- INPUT BUSCADOR -->
+            <div>
+                <Input
+                    id="searchquery"
+                    v-model="searchquery"
+                    type="text"
+                    placeholder="Buscar. 'se necesita sangre'"
+                    class="w-full"
+                />
+            </div>
+
+            <!-- BOTÓN -->
+            <div class="col-span-full md:col-span-2 lg:col-span-1">
+                <Button @click="buscar" class="w-full text-bg-dark text-white">
+                    Buscar
+                </Button>
+            </div>
+        </div>
 
         <!-- DEBUG -->
         <pre>{{ props.anuncios.data }}</pre>
