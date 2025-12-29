@@ -6,7 +6,7 @@ import { CheckCircle } from 'lucide-vue-next'; // Usando Lucide Icons para el ch
 
 // Asumiendo que esta prop viene de la función de Inertia en el backend (route('pago.gracias'))
 const { props } = usePage();
-const redirectUrl = props.redirectUrl || '/anuncios'; // Fallback a /anuncios si no se pasa la URL
+const redirectUrl = props.redirectUrl || '/mis-anuncios'; // Fallback a /anuncios si no se pasa la URL
 
 onMounted(() => {
     // Redirección automática después de 5 segundos (5000 ms)

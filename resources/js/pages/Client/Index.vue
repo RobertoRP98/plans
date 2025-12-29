@@ -9,9 +9,9 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import AppLayout from '@/layouts/app/AppHeaderLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
-import {ref} from 'vue';
 import Create from '@/pages/Posts/Create.vue';
+import { Head, Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 defineProps({
     posts: {
@@ -19,36 +19,31 @@ defineProps({
         required: true,
     },
 
-    categories:{
+    categories: {
         type: Array,
-        required:true,
-    },
-    states:{
-        type:Array,
         required: true,
     },
-    municipios:{
-        type:Array,
-        required:true
+    states: {
+        type: Array,
+        required: true,
     },
-    plans:{
-        type:Array,
-        required:true
+    municipios: {
+        type: Array,
+        required: true,
     },
-    phone:{
-        type:String,
-        required:true
-    }
+    plans: {
+        type: Array,
+        required: true,
+    },
+    phone: {
+        type: String,
+        required: true,
+    },
 });
 
 const openModal = ref(false);
 
 const breadcrumbs = [
-    {
-        title: 'Planes',
-        href: '/planes',
-    },
-
     {
         title: 'Anuncios',
         href: '/#',
@@ -69,20 +64,19 @@ const breadcrumbs = [
                 </Button>
 
                 <Create
-                :open="openModal"
-                @close="openModal = false"
-                :categories="categories"
-                :states="states"
-                :plans="plans"
-                :municipios="municipios"
-                :phone="phone"
+                    :open="openModal"
+                    @close="openModal = false"
+                    :categories="categories"
+                    :states="states"
+                    :plans="plans"
+                    :municipios="municipios"
+                    :phone="phone"
                 ></Create>
             </div>
 
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>#</TableHead>
                         <TableHead>Titulo</TableHead>
                         <TableHead>Inicio</TableHead>
                         <TableHead>Fin</TableHead>
@@ -96,7 +90,6 @@ const breadcrumbs = [
 
                 <TableBody>
                     <TableRow v-for="post in posts" :key="post.id">
-                        <TableCell>{{ post.id }}</TableCell>
                         <TableCell>{{ post.title }}</TableCell>
                         <TableCell>{{ post.start }}</TableCell>
                         <TableCell>{{ post.end }}</TableCell>
@@ -112,21 +105,22 @@ const breadcrumbs = [
                                 :class="
                                     buttonVariants({ variant: 'secondary' })
                                 "
-                                >Show</Link
+                                >Ver</Link
                             >
 
                             <Link
                                 :href="`/anuncios/${post.slug}/edit`"
                                 :class="buttonVariants({ variant: 'default' })"
-                                >Edit</Link
+                                >Editar</Link
                             >
 
-                            <!-- <Button
-                                variant="destructive"
-                                @click="deleteState(municipio.id)"
-                                class="ml-2"
-                                >Delete</Button
-                            > -->
+                            <Link
+                                v-if="post.status != 'active'"
+                                :href="`/anuncios/${post.slug}/premium`"
+                                :class="buttonVariants({ variant: 'secondary' })"
+                            >
+                                ⭐ Hacer Premium
+                            </Link>
                         </TableCell>
                     </TableRow>
                 </TableBody>

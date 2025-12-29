@@ -85,7 +85,7 @@ class PostController extends Controller
                 'plan_id' => $plan->id,
             ]);
 
-            return redirect()->route('anuncios.index')->with('success', 'Anuncio creado correctamente');
+            return redirect()->route('mis.anuncios')->with('success', 'Anuncio creado correctamente');
         }
 
         // SI ELIJE PLAN → crear anuncio pero SIN ACTIVARLO
@@ -157,7 +157,7 @@ class PostController extends Controller
             'slug' => Str::slug($request->title) . '-' . uniqid(),
         ]);
 
-        return redirect()->route('anuncios.index');
+        return redirect()->route('mis.anuncios');
     }
 
     /**

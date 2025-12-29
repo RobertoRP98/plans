@@ -14,8 +14,8 @@ defineProps({
 
 const breadcrumbs = [
     {
-        title: 'Anuncios',
-        href: '/anuncios',
+        title: 'Mis anuncios',
+        href: '/mis-anuncios',
     },
 
     {
@@ -78,7 +78,6 @@ const breadcrumbs = [
                             </Link>
 
                             <div>
-                            <Link :href="`/anuncios/${post.id}/edit`" :class="buttonVariants({variant:'default'})">Editar</Link> 
                             <!-- <Button @click="deleteState(state.id)" class="ml-2" variant="destructive">Delete</Button> -->
                             </div>
                         </div>

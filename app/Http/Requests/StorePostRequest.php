@@ -27,7 +27,7 @@ class StorePostRequest extends FormRequest
             'municipio_id' => 'required',
             'plan_id' => 'required',
             'title' => 'required|max:50',
-            'description' => 'required|min:100',
+            'description' => 'required|min:100|max:255',
         ];
     }
 }

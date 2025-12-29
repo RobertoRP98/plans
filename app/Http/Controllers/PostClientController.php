@@ -9,6 +9,7 @@ use App\Models\State;
 use App\Models\Category;
 use App\Models\Municipio;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Request;
 
 class PostClientController extends Controller
 {
@@ -19,8 +20,8 @@ class PostClientController extends Controller
         $municipios = Municipio::all();
         $plans = Plan::all();
         $posts = Post::with(['user', 'category', 'state', 'municipio', 'plan'])
-        ->where('user_id',Auth::id())
-        ->get();
+            ->where('user_id', Auth::id())
+            ->get();
         $phone = Auth::user()->phone;
 
         return Inertia::render('Client/Index', [
@@ -31,5 +32,33 @@ class PostClientController extends Controller
             'plans' => $plans,
             'phone' => $phone
         ]);
+    }
+
+    public function showPlans(Post $post)
+    {
+        $plans = Plan::where('price', '>', 0)->get();
+
+        return Inertia::render('Client/ShowPlan', [
+            'post' => $post,
+            'plans' => $plans,
+        ]);
+    }
+
+    public function selectPlan(Request $request, Post $post)
+    {
+
+        $this->authorize('update', $post);
+
+        $plan = Plan::findOrFail($request->plan_id);
+
+        //Guardar el plan seleccionado en el anuncio
+        $post->update([
+            'plan_id' => $plan->id,
+            'status' => 'pending',
+            'active' => false,
+            'is_premium' => true,
+        ]);
+
+        return redirect()->route('anuncios.pagar', $post);
     }
 }

@@ -75,8 +75,8 @@ const handleSubmit = () => {
 
 const breadcrumbs = [
     {
-        title: 'Anuncios',
-        href: '/anuncios',
+        title: 'Mis anuncios',
+        href: '/mis-anuncios',
     },
 
     {
