@@ -23,8 +23,6 @@ class PostPublicController extends Controller
     }
 
 
-
-
     public function indexPublic($state, $category = null, $municipio = null, $search = null)
     {
         // normalizar valores vacios
