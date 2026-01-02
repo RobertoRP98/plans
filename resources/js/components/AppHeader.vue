@@ -45,7 +45,6 @@ import {
     UserRoundPen,
 } from 'lucide-vue-next';
 import { computed } from 'vue';
-
 interface Props {
     breadcrumbs?: BreadcrumbItem[];
 }
@@ -72,41 +71,70 @@ const activeItemStyles = computed(
             : '',
 );
 
+const can = (permission: string) => {
+    return page.props.auth?.permissions?.includes(permission);
+};
+
+const hasRole = (role: string) => {
+    return page.props.auth?.roles?.includes(role);
+};
+
+const filteredNavItems = computed(() => {
+    return mainNavItems.filter(item => {
+        if (item.can && !can(item.can)) return false;
+        if (item.hasRole && !hasRole(item.hasRole)) return false;
+        return true;
+    });
+});
+page.props.auth.roles
+
+
 const mainNavItems: NavItem[] = [
     {
         title: 'Estados',
         href: '/estados',
         icon: Building,
+        hasRole: 'Developer',
     },
 
     {
         title: 'Municipios',
         href: '/municipios',
         icon: House,
+        hasRole: 'Developer',
+
     },
 
     {
         title: 'Categorias',
         href: '/categorias',
         icon: ListCheck,
+        hasRole: 'Developer',
+
     },
 
     {
         title: 'Planes',
         href: '/planes',
         icon: NotebookPen,
+        hasRole: 'Developer',
+
     },
 
     {
         title: 'Anuncios',
         href: '/anuncios',
         icon: Eye,
+        hasRole: 'Developer',
+
     },
 
     {
         title: 'Usuarios',
         href: '/users',
         icon: ShieldCheck,
+        hasRole: 'Developer',
+
     },
 
     {
@@ -123,9 +151,14 @@ const mainNavItems: NavItem[] = [
 ];
 
 const rightNavItems: NavItem[] = [];
+
+
 </script>
 
 <template>
+
+    <pre class="text-xs">
+</pre>
     <div v-if="user">
         <div
             class="border-b border-sidebar-border/80 bg-[#fca5a5] text-[#4a1f1f] dark:text-white"
@@ -157,7 +190,7 @@ const rightNavItems: NavItem[] = [];
                             >
                                 <nav class="-mx-3 space-y-1">
                                     <Link
-                                        v-for="item in mainNavItems"
+                                        v-for="item in filteredNavItems"
                                         :key="item.title"
                                         :href="item.href"
                                         class="flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent"
@@ -204,7 +237,7 @@ const rightNavItems: NavItem[] = [];
                             class="flex h-full items-stretch space-x-2"
                         >
                             <NavigationMenuItem
-                                v-for="(item, index) in mainNavItems"
+                                v-for="(item, index) in filteredNavItems"
                                 :key="index"
                                 class="relative flex h-full items-center"
                             >
@@ -359,10 +392,6 @@ const rightNavItems: NavItem[] = [];
         </div>
     </div>
 </div>
-
-
-     
-    
 </template>
 
 
