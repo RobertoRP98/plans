@@ -52,7 +52,7 @@ const breadcrumbs = [
 </script>
 
 <template>
-    <Head title="Anuncios" />
+    <Head title=" Mis Anuncios" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div
@@ -117,7 +117,7 @@ const breadcrumbs = [
                             <Link
                                 v-if="post.status != 'active'"
                                 :href="`/anuncios/${post.slug}/premium`"
-                                :class="buttonVariants({ variant: 'secondary' })"
+                                :class="buttonVariants({ variant: 'default' })"
                             >
                                 ⭐ Hacer Premium
                             </Link>

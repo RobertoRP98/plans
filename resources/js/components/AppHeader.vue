@@ -128,7 +128,7 @@ const rightNavItems: NavItem[] = [];
 <template>
     <div v-if="user">
         <div
-            class="border-b border-sidebar-border/80 bg-[#fca5a5] text-[#4a1f1f]"
+            class="border-b border-sidebar-border/80 bg-[#fca5a5] text-[#4a1f1f] dark:text-white"
         >
             <div class="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
                 <!-- Mobile Menu -->

@@ -23,7 +23,7 @@ defineProps({
             <h1 class="mb-6 text-center text-3xl font-bold">
                 Selecciona tu Estado
             </h1>
-            <p class="mb-10 text-center text-gray-600">
+            <p class="mb-10 text-center text-white/90">
                 Elige el estado donde deseas ayudar a los solicitantes.
             </p>
 
@@ -47,7 +47,7 @@ defineProps({
                     >
                         <CardHeader class="flex items-center gap-2 p-4">
                             <MapPin class="h-5 w-5 text-red-500" />
-                            <CardTitle class="text-lg font-medium">
+                            <CardTitle class="text-lg font-medium dark:text-black">
                                 {{ state.name }}
                             </CardTitle>
                         </CardHeader>

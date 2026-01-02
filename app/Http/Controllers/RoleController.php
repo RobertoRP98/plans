@@ -14,14 +14,14 @@ use Spatie\Permission\Models\Role;
 class RoleController extends Controller
 {
 
-    //     public function __construct()
-    // {
-    //     $this->middleware('permission:View roles',['only'=> ['index']]);
-    //     $this->middleware('permission:Create roles',['only'=> ['create','store']]);
-    //     $this->middleware('permission:Update roles',['only'=> ['edit','update']]);
-    //     $this->middleware('permission:Give permissions roles',['only'=> ['addPermissionToRole','givePermissionToRole']]);
-    // }
- /**
+    public function __construct()
+    {
+        $this->middleware('permission:View roles', ['only' => ['index']]);
+        $this->middleware('permission:Create roles', ['only' => ['create', 'store']]);
+        $this->middleware('permission:Update roles', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:Give permissions roles', ['only' => ['addPermissionToRole', 'givePermissionToRole']]);
+    }
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -83,11 +83,11 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-           $request->validate([
+        $request->validate([
             'name' => [
                 'required',
                 'string',
-                'unique:roles,name,'.$role->id
+                'unique:roles,name,' . $role->id
             ]
         ]);
 
@@ -95,7 +95,7 @@ class RoleController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect('roles')->with('status','Rol Actualizado');
+        return redirect('roles')->with('status', 'Rol Actualizado');
     }
 
     /**
@@ -106,11 +106,12 @@ class RoleController extends Controller
         //
     }
 
-    public function addPermissionToRole ($roleId){
+    public function addPermissionToRole($roleId)
+    {
         $role = Role::findOrFail($roleId);
         $permissions = Permission::get();
 
-            // $rolePermissions = DB::table('role_has_permissions')
+        // $rolePermissions = DB::table('role_has_permissions')
         // ->where('role_has_permissions.role_id',$role->id)
         // ->pluck('role_has_permissions_id','role_has_permissions'.'permission_id')
         // ->all();
@@ -118,10 +119,11 @@ class RoleController extends Controller
         $rolePermissions = $role->permissions->pluck('id')->toArray();
 
 
-        return view('spatie.role.add-permissions', compact('role','permissions', 'rolePermissions'));
+        return view('spatie.role.add-permissions', compact('role', 'permissions', 'rolePermissions'));
     }
 
-    public function givePermissionToRole(Request $request, $roleId){
+    public function givePermissionToRole(Request $request, $roleId)
+    {
 
         $request->validate([
             'permission' => 'required'
@@ -131,8 +133,8 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->permission);
 
-    
 
-        return redirect()->back()->with('status','Permiso agregado al Rol '. $role->name);
+
+        return redirect()->back()->with('status', 'Permiso agregado al Rol ' . $role->name);
     }
 }

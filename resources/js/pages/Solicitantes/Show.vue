@@ -31,11 +31,11 @@ const breadcrumbs = computed(() => [
 
             <!-- TÍTULO -->
             <div class="space-y-2">
-                <h1 class="text-3xl font-bold text-slate-900">
+                <h1 class="text-3xl font-bold text-slate-900 dark:text-white">
                     {{ post.data.title }}
                 </h1>
 
-                <div class="flex flex-wrap items-center gap-3 text-sm text-slate-600">
+                <div class="flex flex-wrap items-center gap-3 text-sm text-slate-600 dark:text-white">
                     <span>
                         📍 {{ post.data.municipio.name }},
                         {{ post.data.state.name }}
@@ -49,7 +49,7 @@ const breadcrumbs = computed(() => [
 
             <!-- DESCRIPCIÓN -->
             <div class="border-t">
-                <p class="whitespace-pre-line text-lg leading-relaxed text-slate-800">
+                <p class="whitespace-pre-line text-lg leading-relaxed text-slate-800 dark:text-white">
                     {{ post.data.description }}
                 </p>
             </div>
@@ -99,12 +99,13 @@ const breadcrumbs = computed(() => [
 
             <!-- FOOTER -->
             <div class="flex items-center justify-between border-t text-sm text-slate-500">
-                <span>👁 {{ post.data.views }} vistas</span>
+                <span class="dark:text-white">👁 {{ post.data.views }} vistas</span>
 
 
                 <Link :href="backUrl">
                 <Button
                     variant="ghost"
+                    class="px-3 py-1 text-sm dark:text-white"
                 >
                     ← Regresar
                 </Button>
